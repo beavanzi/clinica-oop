@@ -7,6 +7,7 @@ package clinic;
 
 import clinic.assets.Visit;
 import clinic.dao.AppointmentDAO;
+import clinic.dao.AppointmentRecordDAO;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
 import clinic.employees.Doctor;
@@ -29,7 +30,8 @@ public class Clinic {
 
         Doctor doctor = new Doctor("Dr. Daniel", "999.999-99", "001");
        // Patient p1 = dao.createPatient("Cherrie", "123456");
-       AppointmentDAO dao = new AppointmentDAO();
+       AppointmentDAO apptDao = new AppointmentDAO();
+       AppointmentRecordDAO apptRecDao = new AppointmentRecordDAO();
        
        
        //Criação do paciente
@@ -51,19 +53,25 @@ public class Clinic {
 
         
         //Criação do agendamento
-        Appointment appt1 = dao.createAppointment("03/05/2022", "14h00min", doctor, p2, Visit.REGULAR);
+        Appointment appt1 = apptDao.createAppointment("03/05/2022", "14h00min", doctor, p2, Visit.REGULAR);
         System.out.println("Agendamento: "+ appt1.getDay() + appt1.getHour() + appt1.getDoctor().getName() + appt1.getPatient().getName() + appt1.getVisit());
         
         //Atualização do agendamento
-        dao.updateAppointment(appt1, "30/05/2022", "18h00min", doctor, p2, Visit.RETURN);
+        apptDao.updateAppointment(appt1, "30/05/2022", "18h00min", doctor, p2, Visit.RETURN);
         System.out.println("Agendamento: "+ appt1.getDay() + appt1.getHour() + appt1.getDoctor().getName() + appt1.getPatient().getName() + appt1.getVisit());
         
         //Exclusão do agendamento
-        dao.deleteAppointment(appt1);
+        apptDao.deleteAppointment(appt1);
         System.out.println("Agendamento: "+ appt1.getDay() + appt1.getHour() + appt1.getDoctor() + appt1.getPatient());
 
+    
         
+        //Criação do agendamento necessario a consulta
+         Appointment appt2 = apptDao.createAppointment("03/05/2022", "14h00min", doctor, p2, Visit.REGULAR);
         
+         //Consulta de relatorio de consulta
+         String apptRec = apptRecDao.getAppointment(appt2);
+         System.out.println(apptRec);
         
         
        
