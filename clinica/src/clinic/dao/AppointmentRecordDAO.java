@@ -8,7 +8,6 @@ package clinic.dao;
 import clinic.assets.Visit;
 import clinic.dao.interfaces.InterfaceAppointmentRecordDAO;
 import clinic.resources.Appointment;
-import clinic.resources.AppointmentRecord;
 
 /**
  *
@@ -23,7 +22,7 @@ public class AppointmentRecordDAO implements InterfaceAppointmentRecordDAO {
        String day = appt.getDay();
        String hour = appt.getHour();
        Visit visit = appt.getVisit();
-       String appointment = pat + doc + day + hour + visit.toString();
+       String appointment = pat + ' ' + doc + ' ' + day + ' ' + hour + ' ' + visit.toString();
        
        return appointment;
     }
