@@ -15,7 +15,7 @@ import clinic.resources.Appointment;
  * @author biaav
  */
 public interface InterfaceAppointmentDAO {
-    Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit visit);
+    Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist);
     void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, Visit visit);
     void deleteAppointment(Appointment appt);
 }

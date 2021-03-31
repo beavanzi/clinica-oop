@@ -19,7 +19,7 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
 
     @Override
     public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist) {
-        Appointment appt = new Appointment();
+        Appointment appt = new Appointment(day,hour,doctor,patient,vist);
         return appt;
     }
 
