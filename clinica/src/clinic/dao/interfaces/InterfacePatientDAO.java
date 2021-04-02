@@ -6,13 +6,16 @@
 package clinic.dao.interfaces;
 
 import clinic.external.Patient;
+import java.util.ArrayList;
 
 /**
  *
  * @author biaav
  */
 public interface InterfacePatientDAO {
-    Patient createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
+    void createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
     void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
     void deletePatient(Patient patient);
+    ArrayList<Patient> getAllPatients();
+    public Patient getPatientByName(String searchParam);
 }

@@ -9,6 +9,7 @@ import clinic.assets.Visit;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,4 +19,5 @@ public interface InterfaceAppointmentDAO {
     Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist);
     void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, Visit visit);
     void deleteAppointment(Appointment appt);
+    ArrayList<Appointment> getAllAppointments();
 }

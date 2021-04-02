@@ -10,36 +10,49 @@ import clinic.dao.interfaces.InterfaceAppointmentDAO;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
+import java.util.ArrayList;
 
 /**
  *
  * @author biaav
  */
 public class AppointmentDAO implements InterfaceAppointmentDAO{
+    private static ArrayList<Appointment> appointments;
 
+    public AppointmentDAO() {
+        this.appointments = new ArrayList();
+    } 
+    
     @Override
     public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist) {
         Appointment appt = new Appointment(day,hour,doctor,patient,vist);
+        appointments.add(appt);
+        
         return appt;
     }
 
     @Override
     public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, Visit visit) {
-        appt.setDay(day);
-        appt.setDoctor(doctor);
-        appt.setHour(hour);
-        appt.setPatient(patient);
-        appt.setVisit(visit);
+        if (appointments.contains(appt)){
+            appt.setDay(day);
+            appt.setDoctor(doctor);
+            appt.setHour(hour);
+            appt.setPatient(patient);
+            appt.setVisit(visit);
+        }
     }
 
     @Override
     public void deleteAppointment(Appointment appt) {
-        appt.setDay(null);
-        appt.setDoctor(null);
-        appt.setHour(null);
-        appt.setPatient(null);
-        appt.setVisit(null);
-
+        if (appointments.contains(appt)){
+            appointments.remove(appt);  
+        }
     }
+
+    @Override
+    public ArrayList<Appointment> getAllAppointments() {
+        return this.appointments;
+    }
+    
 
 }

@@ -7,38 +7,60 @@ package clinic.dao;
 
 import clinic.dao.interfaces.InterfacePatientDAO;
 import clinic.external.Patient;
+import java.util.ArrayList;
 
 /**
  *
  * @author biaav
  */
 public class PatientDAO implements InterfacePatientDAO{
+    private static ArrayList<Patient> patients;
+
+    public PatientDAO() {
+        this.patients = new ArrayList();
+    }
 
     @Override
-    public Patient createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
+    public void createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
         Patient patient = new Patient(name, docNumber, birthDate, address, phone, email, healthInsurance);
-        return patient;
+        patients.add(patient);
     }
 
     @Override
     public void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
-        patient.setAddress(address);
-        patient.setBirthDate(birthDate);
-        patient.setDocNumber(docNumber);
-        patient.setEmail(email);
-        patient.setHealthInsurance(healthInsurance);
-        patient.setName(name);
-        patient.setPhone(phone);
+        if (patients.contains(patient)) {
+            patient.setAddress(address);
+            patient.setBirthDate(birthDate);
+            patient.setDocNumber(docNumber);
+            patient.setEmail(email);
+            patient.setHealthInsurance(healthInsurance);
+            patient.setName(name);
+            patient.setPhone(phone);   
+        }
     }
     
     @Override    
     public void deletePatient(Patient patient){
-        patient.setAddress(null);
-        patient.setBirthDate(null);
-        patient.setDocNumber(null);
-        patient.setEmail(null);
-        patient.setHealthInsurance(null);
-        patient.setName(null);
-        patient.setPhone(null);
+        if (patients.contains(patient)){
+            patients.remove(patient);  
+        }
     }
+
+    @Override
+    public ArrayList<Patient> getAllPatients() {
+        return this.patients;
+    }
+    
+    
+   public Patient getPatientByName(String searchParam){
+      for (int i = 0; i <= patients.size(); i++) {
+        Patient pat = patients.get(i);
+        
+        if (searchParam.equals(pat.getName())) 
+            return pat;
+       }
+      
+      return null;
+    }
+    
 }
