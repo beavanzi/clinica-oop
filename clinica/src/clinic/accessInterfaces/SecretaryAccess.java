@@ -6,6 +6,7 @@
 package clinic.accessInterfaces;
 
 
+import clinic.dao.DoctorDAO;
 import clinic.employees.Doctor;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
@@ -20,7 +21,11 @@ import java.util.Scanner;
 public class SecretaryAccess implements AccessInterface {
     private Secretary sec;
 
-    public SecretaryAccess() {
+    public SecretaryAccess(DoctorDAO dao) {
+        this.sec = new Secretary(dao);
+    }
+    
+     public SecretaryAccess() {
         this.sec = new Secretary();
     }
     
@@ -36,7 +41,8 @@ public class SecretaryAccess implements AccessInterface {
         System.out.println("7. Atualizar Consulta");
         System.out.println("8. Cancelar Consulta");
         System.out.println("9. Listar todas as consultas");
-        System.out.println("10. Gerar relatorio de consulta");
+        System.out.println("10. Gerar relatorio de consulta do dia seguinte");
+        System.out.println("11. Sair");
         System.out.print("> "); 
     }
 
@@ -63,7 +69,7 @@ public class SecretaryAccess implements AccessInterface {
             case 1:
                 System.out.println("<--Criação de Paciente-->");
                 
-                System.out.println("Informe: \nNome:");
+                System.out.print("Informe: \nNome:");
                 patName = scan.nextLine();
                 System.out.print("Numero de documento: ");
                 docNumber = scan.nextLine();
@@ -124,8 +130,11 @@ public class SecretaryAccess implements AccessInterface {
                 System.out.println("<--Listar todos os pacientes-->\n");
                 
                 ArrayList<Patient> patients = sec.getAllPatients();
-                patients.forEach(pat -> System.out.println(pat));
-                
+                if (patients != null){
+                    patients.forEach(pat -> System.out.println(pat.getName() + ' ' + pat.getBirthDate() + ' ' + pat.getDocNumber() + ' ' + pat.getPhone() + ' ' + pat.getEmail() + ' ' + pat.getAddress() + ' ' + pat.getHealthInsurance()));   
+                } else {
+                    System.out.println("Nenhum paciente existe.");
+                }
                 break;
             case 5:
                 System.out.println("<--Encontrar paciente pelo nome-->");
@@ -174,7 +183,7 @@ public class SecretaryAccess implements AccessInterface {
                 appt = sec.getAppointmentByDay(searchName);
                 
                 if (appt != null){
-                    System.out.println("Informe novos dados: \nDia:");
+                    System.out.print("Informe novos dados: \nDia:");
                     day = scan.nextLine();
                     System.out.print("Horário: ");
                     hour = scan.nextLine();
@@ -182,7 +191,7 @@ public class SecretaryAccess implements AccessInterface {
                     docName = scan.nextLine();
                     System.out.print("Nome paciente: ");
                     patName = scan.nextLine();
-                    System.out.print("Tipo de visita: (Regular, Retorno)");
+                    System.out.print("Tipo de visita(Regular, Retorno): ");
                     visit = scan.nextLine();
                     
                     patient = sec.getPatientByName(patName);
@@ -218,14 +227,34 @@ public class SecretaryAccess implements AccessInterface {
                 System.out.println("<--Listar todos os agendamentos-->\n");
                 
                 ArrayList<Appointment> appts = sec.getAllAppointments();
-                appts.forEach(app -> System.out.println(app));
+                if (appts != null ){
+                    appts.forEach(app -> System.out.println("Agendamento: " + app.getPatient().getName() + " com o/a doutor/a " + app.getDoctor().getName()));
+                } else {
+                    System.out.println("Nenhum agendamento existe."); 
+                }
+                break;
             case 10:
                 System.out.println("<--Consultar agendamentos do próximo dia-->");
                 
                 ArrayList<Appointment> apptsNextDay = sec.getNextDayAppointments();
-                apptsNextDay.forEach(app -> System.out.println("Agendamento: " + app.getPatient().getName() + " com o/a doutor/a " + app.getDoctor().getName()));
-            default:
+                if (apptsNextDay != null ){
+                    apptsNextDay.forEach(app -> System.out.println("Agendamento: " + app.getPatient().getName() + " com o/a doutor/a " + app.getDoctor().getName()));
+                } else {
+                   System.out.println("Nenhum agendamento existe."); 
+                }   
+                break;
+            case 11:
                 System.out.println("Saindo...");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("<--Listar Doutores-->");
+                ArrayList<Doctor> docs = sec.getAllDoctors();
+                if (docs != null){
+                    docs.forEach(app -> System.out.println(app.getName()));
+                } else  {
+                    System.out.println("Nenhum doutor existe.");
+                }
                 break;
         }
     }

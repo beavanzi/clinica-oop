@@ -48,17 +48,23 @@ public class PatientDAO implements InterfacePatientDAO{
 
     @Override
     public ArrayList<Patient> getAllPatients() {
-        return this.patients;
+        if (patients.size() > 0){
+            return this.patients;
+        }
+        
+        return null;
     }
     
     
    public Patient getPatientByName(String searchParam){
-      for (int i = 0; i <= patients.size(); i++) {
-        Patient pat = patients.get(i);
-        
-        if (searchParam.equals(pat.getName())) 
-            return pat;
-       }
+      if (patients.size() > 0){
+        for (int i = 0; i < patients.size(); i++) {
+          Patient pat = patients.get(i);
+
+          if (searchParam.equals(pat.getName())) 
+              return pat;
+         }
+      }
       
       return null;
     }
@@ -67,8 +73,10 @@ public class PatientDAO implements InterfacePatientDAO{
     public ArrayList<Patient> getAllPatientsWithoutComunications() {
        ArrayList<Patient> pats = patients;
        
-       pats.stream().filter(pat -> pat.getEmail() == null || pat.getEmail() == "" || pat.getPhone() == null || pat.getPhone() == "" );
-      
+       if (patients.size() > 0){
+        pats.stream().filter(pat -> pat.getEmail() == null || pat.getEmail() == "" || pat.getPhone() == null || pat.getPhone() == "" );
+       }
+       
       return pats;
     }
    

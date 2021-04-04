@@ -19,18 +19,8 @@ public class AppointmentRecordDAO implements InterfaceAppointmentRecordDAO {
 
     @Override
     public ArrayList<Appointment> getNextDayAppointments(ArrayList<Appointment> appts) {
-      // LocalDate date = LocalDate.now();
-       Date dt = new Date();
-       LocalDate.from(dt.toInstant()).plusDays(1); 
-       appts.stream().filter(appt -> appt.getDay().equals(dt.toString()) );
- 
-        
-//       String pat = appt.getPatient().getName();
-//       String doc = appt.getDoctor().getName();
-//       String day = appt.getDay();
-//       String hour = appt.getHour();
-//       String visit = appt.getVisit();
-//       String appointment = pat + ' ' + doc + ' ' + day + ' ' + hour + ' ' + visit;
+        LocalDate date = LocalDate.now().plusDays(1);
+       appts.stream().filter(appt -> appt.getDay().equals(date.toString()) );
        
        return appts;
     }

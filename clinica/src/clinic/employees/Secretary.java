@@ -5,6 +5,8 @@
  */
 package clinic.employees;
 
+import clinic.Clinic;
+import clinic.Global;
 import clinic.dao.AppointmentDAO;
 import clinic.dao.AppointmentRecordDAO;
 import clinic.dao.DoctorDAO;
@@ -30,6 +32,21 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
 
 
     public Secretary() {
+        this.secName = secName;
+        this.secId = secId;
+        this.daoPat = new PatientDAO();
+        this.daoAppt = new AppointmentDAO();
+        this.daoApptRec = new AppointmentRecordDAO();
+        this.daoDoc = Global.daoDoc;
+    }
+    
+      public Secretary(DoctorDAO daoDoc) {
+        this.secName = secName;
+        this.secId = secId;
+        this.daoPat = new PatientDAO();
+        this.daoAppt = new AppointmentDAO();
+        this.daoApptRec = new AppointmentRecordDAO();
+        this.daoDoc = Global.daoDoc;
     }
 
     public Secretary(String secName, String secId) {
@@ -38,6 +55,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
         this.daoPat = new PatientDAO();
         this.daoAppt = new AppointmentDAO();
         this.daoApptRec = new AppointmentRecordDAO();
+        this.daoDoc = new DoctorDAO();
     }
 
     public String getSecName() {
@@ -106,6 +124,10 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     public Doctor getDoctorByName(String searchParam){
         return this.daoDoc.getDoctorByName(searchParam);
     }
+    
+    public ArrayList<Doctor> getAllDoctors(){
+        return this.daoDoc.getAllDoctors();
+    }
 
     @Override
     public Appointment getAppointmentByDay(String searchParam) {
@@ -128,6 +150,8 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
         ArrayList<Appointment> apptsNextDay = this.daoApptRec.getNextDayAppointments(apps);   
         return apptsNextDay;
     }
+    
+    
     
     
 }

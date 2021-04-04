@@ -22,13 +22,13 @@ public class DoctorDAO implements InterfaceDoctorDAO{
 
     @Override
     public void createDoctor(String name, String doctorDoc, String id) {
-        Doctor doctor = new Doctor();
+        Doctor doctor = new Doctor(name,doctorDoc, id);
         doctors.add(doctor);
     }
 
     @Override
     public Doctor getDoctorByName(String searchParam) {
-       for (int i = 0; i <= doctors.size(); i++) {
+       for (int i = 0; i < doctors.size(); i++) {
         Doctor doc = doctors.get(i);
         
         if (searchParam.equals(doc.getName())) 
@@ -36,6 +36,14 @@ public class DoctorDAO implements InterfaceDoctorDAO{
        }
       
       return null;
+    }
+    
+    public ArrayList<Doctor> getAllDoctors() {
+        if (doctors.size() > 0){
+            return this.doctors;
+        }
+        
+        return null;
     }
 
 }
