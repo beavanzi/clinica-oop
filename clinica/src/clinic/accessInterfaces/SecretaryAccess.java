@@ -10,6 +10,7 @@ import clinic.employees.Doctor;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -30,12 +31,12 @@ public class SecretaryAccess implements AccessInterface {
         System.out.println("2. Atualizar Paciente");
         System.out.println("3. Remover Paciente");
         System.out.println("4. Listar todos os pacientes");
-        System.out.println("6. Encontrar paciente pelo nome");
-        System.out.println("7. Agendar Consulta");
-        System.out.println("8. Atualizar Consulta");
-        System.out.println("9. Cancelar Consulta");
-        System.out.println("10. Listar todas as consultas");
-        System.out.println("11. Gerar relatorio de consulta");
+        System.out.println("5. Encontrar paciente pelo nome");
+        System.out.println("6. Agendar Consulta");
+        System.out.println("7. Atualizar Consulta");
+        System.out.println("8. Cancelar Consulta");
+        System.out.println("9. Listar todas as consultas");
+        System.out.println("10. Gerar relatorio de consulta");
         System.out.print("> "); 
     }
 
@@ -120,16 +121,26 @@ public class SecretaryAccess implements AccessInterface {
                 }
                 break;
             case 4:
+                System.out.println("<--Listar todos os pacientes-->\n");
+                
+                ArrayList<Patient> patients = sec.getAllPatients();
+                patients.forEach(pat -> System.out.println(pat));
                 
                 break;
             case 5:
-                System.out.println("Operação 5 secretária");
+                System.out.println("<--Encontrar paciente pelo nome-->");
+                System.out.print("Digite o nome do paciente: > ");
+                searchName = scan.nextLine();
+                patient = sec.getPatientByName(searchName);
+                
+                if (patient != null){
+                    System.out.println(patient.getName() + ' ' + patient.getBirthDate() + ' ' + patient.getDocNumber() + ' ' + patient.getPhone() + ' ' + patient.getEmail() + ' ' + patient.getAddress() + ' ' + patient.getHealthInsurance());
+                } else {
+                    System.out.println("Paciente não encontrado");
+                }
                 break;
             case 6:
-                System.out.println("Operação 6 secretária");
-                break;
-            case 7:
-               System.out.println("<--Criação de Agendamento-->");
+                System.out.println("<--Criação de Agendamento-->");
                 
                 System.out.println("Informe: \nDia:");
                 day = scan.nextLine();
@@ -156,7 +167,7 @@ public class SecretaryAccess implements AccessInterface {
                 sec.createAppointment(day, hour, doctor, patient, visit);
                 
                 break;
-            case 8:
+            case 7:
                 System.out.println("<--Atualização de Agendamento-->");
                 System.out.print("Digite o nome do paciente: > ");
                 searchName = scan.nextLine();
@@ -191,7 +202,7 @@ public class SecretaryAccess implements AccessInterface {
                 }
 
                 break;
-            case 9:
+            case 8:
                 System.out.println("<--Remoção de Agendamento-->");
                 System.out.print("Digite o nome do paciente: > ");
                 searchName = scan.nextLine();
@@ -202,7 +213,12 @@ public class SecretaryAccess implements AccessInterface {
                 } else {
                    System.out.println("Agendamento não encontrado");
                 }
-                break;              
+                break;  
+            case 9:
+                System.out.println("<--Listar todos os agendamentos-->\n");
+                
+                ArrayList<Appointment> appts = sec.getAllAppointments();
+                appts.forEach(app -> System.out.println(app));
             default:
                 System.out.println("Saindo...");
                 break;
