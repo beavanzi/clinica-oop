@@ -8,6 +8,7 @@ package clinic.employees;
 import clinic.assets.Visit;
 import clinic.dao.AppointmentDAO;
 import clinic.dao.AppointmentRecordDAO;
+import clinic.dao.DoctorDAO;
 import clinic.dao.PatientDAO;
 import clinic.dao.interfaces.InterfaceAppointmentDAO;
 import clinic.dao.interfaces.InterfaceAppointmentRecordDAO;
@@ -27,6 +28,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     private AppointmentDAO daoAppt;
     private PatientDAO daoPat;
     private AppointmentRecordDAO daoApptRec;
+    private DoctorDAO daoDoc;
 
     public Secretary() {
     }
@@ -106,6 +108,10 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     public ArrayList<Appointment> getAllAppointments() {
         return this.daoAppt.getAllAppointments();
 
+    }
+    
+    public Doctor getDoctorByName(String searchParam){
+        return this.daoDoc.getDoctorByName(searchParam);
     }
     
     

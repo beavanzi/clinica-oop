@@ -5,9 +5,10 @@
  */
 package clinic.accessInterfaces;
 
+
+import clinic.employees.Doctor;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -40,7 +41,7 @@ public class SecretaryAccess implements AccessInterface {
     @Override
     public void mapping(int operation) {
        Scanner scan = new Scanner(System.in);
-       String name;
+       String patName;
        String docNumber;
        String birthDate;
        String address;
@@ -48,14 +49,19 @@ public class SecretaryAccess implements AccessInterface {
        String email;
        String healthInsurance;
        String searchName;
+       String day;
+       String hour;
+       String visit;
+       String docName; 
        Patient patient;
+       Doctor doctor;
         
         switch (operation) {
             case 1:
                 System.out.println("<--Criação de Paciente-->");
                 
                 System.out.println("Informe: \nNome:");
-                name = scan.nextLine();
+                patName = scan.nextLine();
                 System.out.print("Numero de documento: ");
                 docNumber = scan.nextLine();
                 System.out.print("Data de nascimento: ");
@@ -69,7 +75,7 @@ public class SecretaryAccess implements AccessInterface {
                 System.out.print("Convênio: ");
                 healthInsurance = scan.nextLine();
                 
-                sec.createPatient(name, docNumber, birthDate, address, phone, email, healthInsurance);
+                sec.createPatient(patName, docNumber, birthDate, address, phone, email, healthInsurance);
                 
                 break;
             case 2:
@@ -80,7 +86,7 @@ public class SecretaryAccess implements AccessInterface {
                 
                 if (patient != null){
                     System.out.print("\nNome: ");
-                    name = scan.nextLine();
+                    patName = scan.nextLine();
                     System.out.print("Numero de documento: ");
                     docNumber = scan.nextLine();
                     System.out.print("Data de nascimento: ");
@@ -94,7 +100,7 @@ public class SecretaryAccess implements AccessInterface {
                     System.out.print("Convênio: ");
                 healthInsurance = scan.nextLine();
                 
-                sec.updatePatient(patient, name, docNumber, birthDate, address, phone, email, healthInsurance);
+                sec.updatePatient(patient, patName, docNumber, birthDate, address, phone, email, healthInsurance);
                 } else {
                     System.out.println("Paciente não encontrado");
                 }
@@ -121,7 +127,25 @@ public class SecretaryAccess implements AccessInterface {
                 System.out.println("Operação 6 secretária");
                 break;
             case 7:
-                System.out.println("Operação 7 secretária");
+               System.out.println("<--Criação de Agendamento-->");
+                
+                System.out.println("Informe: \nDia:");
+                day = scan.nextLine();
+                System.out.print("Horário: ");
+                hour = scan.nextLine();
+                System.out.print("Nome doutor: ");
+                docName = scan.nextLine();
+                System.out.print("Nome paciente: ");
+                patName = scan.nextLine();
+                System.out.print("Tipo de visita: (Regular, Return)");
+                visit = scan.nextLine();
+                
+                Visit vis = visit.toUpperCase();
+                patient = sec.getPatientByName(patName);
+                doctor = sec.getDoctorByName(docName);
+
+                sec.createAppointment(day, hour, doctor, patient, visit.toUpperCase());
+                
                 break;
             case 8:
                 System.out.println("Operação 8 secretária");
