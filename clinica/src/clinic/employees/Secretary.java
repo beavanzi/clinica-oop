@@ -10,7 +10,6 @@ import clinic.dao.AppointmentRecordDAO;
 import clinic.dao.DoctorDAO;
 import clinic.dao.PatientDAO;
 import clinic.dao.interfaces.InterfaceAppointmentDAO;
-import clinic.dao.interfaces.InterfaceAppointmentRecordDAO;
 import clinic.dao.interfaces.InterfacePatientDAO;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author biaav
  */
-public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, InterfaceAppointmentRecordDAO {
+public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     private String secName;
     private String secId;
     private AppointmentDAO daoAppt;
@@ -99,12 +98,6 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     }
 
     @Override
-    public String getAppointment(Appointment appointment) {
-        String apptRec = this.daoApptRec.getAppointment(appointment);
-        return apptRec;
-    }
-
-    @Override
     public ArrayList<Appointment> getAllAppointments() {
         return this.daoAppt.getAllAppointments();
 
@@ -118,8 +111,23 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     public Appointment getAppointmentByDay(String searchParam) {
         return this.daoAppt.getAppointmentByDay(searchParam);
     }
+
+    @Override
+    public ArrayList<Patient> getAllPatientsWithoutComunications() {
+        return this.daoPat.getAllPatientsWithoutComunications();
+    }
     
-    
+    @Override
+    public ArrayList<Appointment> getAppointmentsByPatients(ArrayList<Patient> patients) {
+        return this.daoAppt.getAppointmentsByPatients(patients);
+    }
+
+    public ArrayList<Appointment> getNextDayAppointments() {
+        ArrayList<Patient> pats = this.getAllPatientsWithoutComunications();
+        ArrayList<Appointment> apps = this.getAppointmentsByPatients(pats);
+        ArrayList<Appointment> apptsNextDay = this.daoApptRec.getNextDayAppointments(apps);   
+        return apptsNextDay;
+    }
     
     
 }

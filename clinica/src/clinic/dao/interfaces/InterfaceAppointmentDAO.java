@@ -20,4 +20,5 @@ public interface InterfaceAppointmentDAO {
     void deleteAppointment(Appointment appt);
     ArrayList<Appointment> getAllAppointments();
     Appointment getAppointmentByDay(String day);
+    ArrayList<Appointment> getAppointmentsByPatients(ArrayList<Patient> patients);
 }

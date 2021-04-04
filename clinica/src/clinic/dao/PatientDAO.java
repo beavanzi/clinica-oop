@@ -62,5 +62,16 @@ public class PatientDAO implements InterfacePatientDAO{
       
       return null;
     }
+
+    @Override
+    public ArrayList<Patient> getAllPatientsWithoutComunications() {
+       ArrayList<Patient> pats = patients;
+       
+       pats.stream().filter(pat -> pat.getEmail() == null || pat.getEmail() == "" || pat.getPhone() == null || pat.getPhone() == "" );
+      
+      return pats;
+    }
+   
+   
     
 }

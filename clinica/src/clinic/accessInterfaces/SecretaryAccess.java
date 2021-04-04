@@ -219,6 +219,11 @@ public class SecretaryAccess implements AccessInterface {
                 
                 ArrayList<Appointment> appts = sec.getAllAppointments();
                 appts.forEach(app -> System.out.println(app));
+            case 10:
+                System.out.println("<--Consultar agendamentos do próximo dia-->");
+                
+                ArrayList<Appointment> apptsNextDay = sec.getNextDayAppointments();
+                apptsNextDay.forEach(app -> System.out.println("Agendamento: " + app.getPatient().getName() + " com o/a doutor/a " + app.getDoctor().getName()));
             default:
                 System.out.println("Saindo...");
                 break;

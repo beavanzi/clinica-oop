@@ -55,7 +55,7 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
 
     @Override
     public Appointment getAppointmentByDay(String searchParam) {
-       for (int i = 0; i <= appointments.size(); i++) {
+        for (int i = 0; i <= appointments.size(); i++) {
         Appointment appt = appointments.get(i);
         
         if (searchParam.equals(appt.getDay())) 
@@ -64,6 +64,28 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
       
       return null;
     }
+
+    @Override
+    public ArrayList<Appointment> getAppointmentsByPatients(ArrayList<Patient> patients) {
+        ArrayList<Appointment> newAppts = null;
+        
+        for (int i = 0; i <= appointments.size(); i++) {
+        Appointment appt = appointments.get(i);
+        
+            for (int j = 0; j <= patients.size(); j++) {
+                Patient pat = patients.get(i);
+
+                if (pat == appt.getPatient()){
+                   newAppts.add(appt);
+                }
+            }
+       }
+        
+        return newAppts;
+      
+    }
+    
+    
     
     
     
