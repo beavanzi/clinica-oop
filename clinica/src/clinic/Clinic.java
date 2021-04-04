@@ -37,8 +37,8 @@ public class Clinic {
         do {
             System.out.println("------CLINICA SANTA MONICA------\n");
             System.out.println("\nSelecione seu tipo de acesso:\n");
-            System.out.println("Secretário.");
-            System.out.println("Médico\n");
+            System.out.println("[1] - Secretário.");
+            System.out.println("[2] - Médico\n");
             System.out.print("> ");
             opt = scan.nextInt();
         } while (opt != 1 && opt != 2);

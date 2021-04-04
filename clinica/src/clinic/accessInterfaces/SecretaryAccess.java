@@ -34,6 +34,7 @@ public class SecretaryAccess implements AccessInterface {
         System.out.println("9. Cancelar Consulta");
         System.out.println("10. Listar todas as consultas");
         System.out.println("11. Gerar relatorio de consulta");
+        
         System.out.print("> "); 
     }
 

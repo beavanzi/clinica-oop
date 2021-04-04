@@ -27,7 +27,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     private AppointmentDAO daoAppt;
     private PatientDAO daoPat;
     private AppointmentRecordDAO daoApptRec;
-
+  
     public Secretary() {
     }
 
