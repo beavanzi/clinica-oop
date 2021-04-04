@@ -50,4 +50,16 @@ public class AttendanceDAO implements InterfaceAttendanceDAO{
     public ArrayList<Attendance> getAllAttendances(){
         return this.attendances;
     }
+    
+    @Override
+    public Attendance getAttendanceByDay(String searchParam) {
+       for (int i = 0; i <= attendances.size(); i++) {
+        Attendance att = attendances.get(i);
+        
+        if (searchParam.equals(att.getDay())) 
+            return att;
+       }
+      
+      return null;
+    }
 }

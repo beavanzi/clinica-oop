@@ -16,5 +16,6 @@ public interface InterfaceAttendanceDAO {
     Attendance createAttendance(int day, int month, Patient patient, Doctor doctor);
     void updateAttendance(Attendance att, int day, int month, Patient patient, Doctor doctor);
     void deleteAttendance(Attendance att);
+    Attendance getAttendanceByDay(String searchParam);
     ArrayList<Attendance> getAllAttendances();
 }

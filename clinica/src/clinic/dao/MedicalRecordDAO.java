@@ -20,6 +20,7 @@ public class MedicalRecordDAO implements InterfaceMedicalRecordDAO {
         MedicalRecord medRec = new MedicalRecord(prescription, attestation, followUp, doctor, patient);
         return medRec;
     }
+ 
 
     @Override
     public String getPrescription(MedicalRecord medRec){
