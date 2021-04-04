@@ -5,7 +5,6 @@
  */
 package clinic.employees;
 
-import clinic.assets.Visit;
 import clinic.dao.AppointmentDAO;
 import clinic.dao.AppointmentRecordDAO;
 import clinic.dao.DoctorDAO;
@@ -84,13 +83,13 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     }
 
     @Override
-    public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist) {
-        Appointment appt = this.daoAppt.createAppointment(day, hour, doctor, patient, vist);
+    public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
+        Appointment appt = this.daoAppt.createAppointment(day, hour, doctor, patient, visit);
         return appt;
     }
 
     @Override
-    public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, Visit visit) {
+    public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, String visit) {
         this.daoAppt.updateAppointment(appt, day, hour, doctor, patient, visit);
     }
 
@@ -114,6 +113,13 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     public Doctor getDoctorByName(String searchParam){
         return this.daoDoc.getDoctorByName(searchParam);
     }
+
+    @Override
+    public Appointment getAppointmentByDay(String searchParam) {
+        return this.daoAppt.getAppointmentByDay(searchParam);
+    }
+    
+    
     
     
 }

@@ -5,7 +5,6 @@
  */
 package clinic.dao;
 
-import clinic.assets.Visit;
 import clinic.dao.interfaces.InterfaceAppointmentDAO;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
@@ -24,15 +23,15 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
     } 
     
     @Override
-    public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, Visit vist) {
-        Appointment appt = new Appointment(day,hour,doctor,patient,vist);
+    public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
+        Appointment appt = new Appointment(day,hour,doctor,patient,visit);
         appointments.add(appt);
         
         return appt;
     }
 
     @Override
-    public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, Visit visit) {
+    public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, String visit) {
         if (appointments.contains(appt)){
             appt.setDay(day);
             appt.setDoctor(doctor);
@@ -53,6 +52,20 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
     public ArrayList<Appointment> getAllAppointments() {
         return this.appointments;
     }
+
+    @Override
+    public Appointment getAppointmentByDay(String searchParam) {
+       for (int i = 0; i <= appointments.size(); i++) {
+        Appointment appt = appointments.get(i);
+        
+        if (searchParam.equals(appt.getDay())) 
+            return appt;
+       }
+      
+      return null;
+    }
+    
+    
     
 
 }

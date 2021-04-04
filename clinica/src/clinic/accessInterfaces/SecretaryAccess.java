@@ -9,6 +9,7 @@ package clinic.accessInterfaces;
 import clinic.employees.Doctor;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
+import clinic.resources.Appointment;
 import java.util.Scanner;
 
 /**
@@ -55,6 +56,7 @@ public class SecretaryAccess implements AccessInterface {
        String docName; 
        Patient patient;
        Doctor doctor;
+       Appointment appt;
         
         switch (operation) {
             case 1:
@@ -98,9 +100,9 @@ public class SecretaryAccess implements AccessInterface {
                     System.out.print("Email: ");
                     email = scan.nextLine();
                     System.out.print("Convênio: ");
-                healthInsurance = scan.nextLine();
+                    healthInsurance = scan.nextLine();
                 
-                sec.updatePatient(patient, patName, docNumber, birthDate, address, phone, email, healthInsurance);
+                    sec.updatePatient(patient, patName, docNumber, birthDate, address, phone, email, healthInsurance);
                 } else {
                     System.out.println("Paciente não encontrado");
                 }
@@ -137,21 +139,69 @@ public class SecretaryAccess implements AccessInterface {
                 docName = scan.nextLine();
                 System.out.print("Nome paciente: ");
                 patName = scan.nextLine();
-                System.out.print("Tipo de visita: (Regular, Return)");
+                System.out.print("Tipo de visita: (Regular, Retorno)");
                 visit = scan.nextLine();
-                
-                Visit vis = visit.toUpperCase();
-                patient = sec.getPatientByName(patName);
-                doctor = sec.getDoctorByName(docName);
 
-                sec.createAppointment(day, hour, doctor, patient, visit.toUpperCase());
+                patient = sec.getPatientByName(patName);
+                if (patient == null) {
+                    System.out.println("Paciente não encontrado");
+                    break;
+                }
+                doctor = sec.getDoctorByName(docName);
+                if (doctor == null){
+                   System.out.println("Doutor não encontrado");
+                   break;
+                }
+
+                sec.createAppointment(day, hour, doctor, patient, visit);
                 
                 break;
             case 8:
-                System.out.println("Operação 8 secretária");
+                System.out.println("<--Atualização de Agendamento-->");
+                System.out.print("Digite o nome do paciente: > ");
+                searchName = scan.nextLine();
+                appt = sec.getAppointmentByDay(searchName);
+                
+                if (appt != null){
+                    System.out.println("Informe novos dados: \nDia:");
+                    day = scan.nextLine();
+                    System.out.print("Horário: ");
+                    hour = scan.nextLine();
+                    System.out.print("Nome doutor: ");
+                    docName = scan.nextLine();
+                    System.out.print("Nome paciente: ");
+                    patName = scan.nextLine();
+                    System.out.print("Tipo de visita: (Regular, Retorno)");
+                    visit = scan.nextLine();
+                    
+                    patient = sec.getPatientByName(patName);
+                    if (patient == null) {
+                        System.out.println("Paciente não encontrado");
+                        break;
+                    }
+                    doctor = sec.getDoctorByName(docName);
+                    if (doctor == null){
+                       System.out.println("Doutor não encontrado");
+                       break;
+                    }
+                    
+                    sec.updateAppointment(appt, day, hour, doctor, patient, visit);
+                } else {
+                    System.out.println("Agendamento não encontrado");
+                }
+
                 break;
             case 9:
-                System.out.println("Operação 9 secretária");
+                System.out.println("<--Remoção de Agendamento-->");
+                System.out.print("Digite o nome do paciente: > ");
+                searchName = scan.nextLine();
+                appt = sec.getAppointmentByDay(searchName);
+                
+                if (appt != null){
+                   sec.deleteAppointment(appt);
+                } else {
+                   System.out.println("Agendamento não encontrado");
+                }
                 break;              
             default:
                 System.out.println("Saindo...");

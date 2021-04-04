@@ -5,7 +5,6 @@
  */
 package clinic.resources;
 
-import clinic.assets.Visit;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
 
@@ -18,12 +17,12 @@ public class Appointment {
     private String hour;
     private Doctor doctor;
     private Patient patient;
-    private Visit visit;
+    private String visit;
 
     public Appointment() {
     }
 
-    public Appointment(String day, String hour, Doctor doctor, Patient patient, Visit visit) {
+    public Appointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
         this.day = day;
         this.hour = hour;
         this.doctor = doctor;
@@ -63,11 +62,11 @@ public class Appointment {
         this.patient = patient;
     }
 
-    public Visit getVisit() {
+    public String getVisit() {
         return visit;
     }
 
-    public void setVisit(Visit visit) {
+    public void setVisit(String visit) {
         this.visit = visit;
     }
     
