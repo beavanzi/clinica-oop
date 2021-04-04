@@ -30,6 +30,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO, 
     private AppointmentRecordDAO daoApptRec;
     private DoctorDAO daoDoc;
 
+
     public Secretary() {
     }
 
