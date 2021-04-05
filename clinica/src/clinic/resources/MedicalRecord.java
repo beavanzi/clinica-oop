@@ -30,6 +30,7 @@ public class MedicalRecord {
         this.doctor = doctor;
         this.patient = patient;
     }
+    
     public String getAttestation() {
         return attestation;
     }
@@ -70,7 +71,5 @@ public class MedicalRecord {
         this.patient = patient;
     }
 
-  
-    
     
 }
