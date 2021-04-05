@@ -17,5 +17,6 @@ public interface InterfacePatientDAO {
     void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
     void deletePatient(Patient patient);
     ArrayList<Patient> getAllPatients();
-    public Patient getPatientByName(String searchParam);
+    Patient getPatientByName(String searchParam);
+    ArrayList<Patient> getAllPatientsWithoutComunications();
 }

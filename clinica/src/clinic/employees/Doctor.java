@@ -100,7 +100,10 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     public ArrayList<Patient> getAllPatients(){
         return this.daoPat.getAllPatients();
     }
-    
+    @Override
+    public ArrayList<Patient> getAllPatientsWithoutComunications(){
+        return this.getAllPatientsWithoutComunications();
+    }
     
     @Override
     public void updateAditionalInfo(AditionalInfo adInfo, String badHabit, String allergy, String surgery) {

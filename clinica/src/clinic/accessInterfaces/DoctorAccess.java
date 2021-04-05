@@ -221,20 +221,20 @@ public class DoctorAccess implements AccessInterface {
                 System.out.println("<--Atualização de Agendamento-->");
                 System.out.print("Digite o nome do paciente: > ");
                 searchName = scan.nextLine();
-                medRec = doc.getMedicalRecord(searchName);
+               // medRec = doc.getMedicalRecord(searchName);
                
-                patient = doc.getPatientByName(patName);
+                patient = doc.getPatientByName(searchName);
                 if (patient == null) {
                     System.out.println("Paciente não encontrado");
                     break;
                 }
-                doctor = doc.getDoctorByName(docName);
+                doctor = doc.getDoctorByName(searchName);
                 if (doctor == null){
                     System.out.println("Doutor não encontrado");
                     break;
                 }
                  
-                doc.getPrescription(medRec);
+               // doc.getPrescription(medRec);
                 break;   
             case 10:
                 System.out.println("Operação 10 médico");

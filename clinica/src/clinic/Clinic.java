@@ -9,8 +9,6 @@ package clinic;
 import clinic.accessInterfaces.AccessInterface;
 import clinic.accessInterfaces.DoctorAccess;
 import clinic.accessInterfaces.SecretaryAccess;
-import clinic.employees.Secretary;
-import clinic.employees.Doctor;
 import java.util.Scanner;
 
 /**
@@ -25,12 +23,9 @@ public class Clinic {
     public static void main(String[] args) {
         
         
-        Secretary sec1 = new Secretary("Marrie", "001");
-        Secretary sec2 = new Secretary("Joanna", "002");
+        Global.daoDoc.createDoctor("Daniel", "999.999-99", "001");
+        Global.daoDoc.createDoctor("Manoel", "999.888-77", "002");      
 
-        Doctor doctor = new Doctor("Dr. Daniel", "999.999-99", "001");
-        
-        
         Scanner scan = new Scanner(System.in);
         int opt;
 

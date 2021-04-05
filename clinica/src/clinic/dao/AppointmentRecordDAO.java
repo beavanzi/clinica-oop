@@ -7,6 +7,9 @@ package clinic.dao;
 
 import clinic.dao.interfaces.InterfaceAppointmentRecordDAO;
 import clinic.resources.Appointment;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -15,15 +18,12 @@ import clinic.resources.Appointment;
 public class AppointmentRecordDAO implements InterfaceAppointmentRecordDAO {
 
     @Override
-    public String getAppointment(Appointment appt) {
-       String pat = appt.getPatient().getName();
-       String doc = appt.getDoctor().getName();
-       String day = appt.getDay();
-       String hour = appt.getHour();
-       String visit = appt.getVisit();
-       String appointment = pat + ' ' + doc + ' ' + day + ' ' + hour + ' ' + visit;
+    public ArrayList<Appointment> getNextDayAppointments(ArrayList<Appointment> appts) {
+        LocalDate date = LocalDate.now().plusDays(1);
+       appts.stream().filter(appt -> appt.getDay().equals(date.toString()) );
        
-       return appointment;
+       return appts;
     }
+
     
 }
