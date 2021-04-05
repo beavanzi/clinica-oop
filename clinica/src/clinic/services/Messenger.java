@@ -28,7 +28,6 @@ public class Messenger {
         this.daoMes = new MessageDAO();
     }
     
-   
     public void sendMessage() {
         ArrayList<Patient> patients = this.daoPat.getAllPatientsWithComunications();
         ArrayList<Appointment> appts = this.daoAppt.getAppointmentsByPatients(patients);

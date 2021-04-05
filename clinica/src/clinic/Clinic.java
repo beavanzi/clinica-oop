@@ -27,11 +27,11 @@ public class Clinic {
         int opt;
         
         do {
-            System.out.println("------CLINICA SANTA MONICA------\n");
+            System.out.println("------CLINICA BELEZA E SAUDE------\n");
             System.out.println("\nSelecione uma opção:\n");
             System.out.println("[1] - Acessar sistema Secretário");
             System.out.println("[2] - Acessar sistema Médico");
-            System.out.println("[3] - Enviar Mensagens de Agendamentos");
+            System.out.println("[3] - Enviar Mensagens de Agendamentos\nAtenação: Essa opção somente funciona se houver mensagens para enviar. Senão, ela acessa o sistema como Secretário");
             System.out.println("[100] - Sair\n");
 
             
@@ -43,16 +43,6 @@ public class Clinic {
     }
     
     public static void main(String[] args) {
-        
-        
-        Global.daoDoc.createDoctor("Daniel", "999.999-99", "001");
-        Global.daoDoc.createDoctor("Manoel", "999.888-77", "002");
-        Global.daoPat.createPatient("Cherrie", "1111", "111", "111", "444-444", "", "particular");
-        Global.daoPat.createPatient("Emillie", "1111", "111", "111", "", "email@email", "particular");
-        Global.daoPat.createPatient("Marrie", "1111", "111", "111", "", "", "particular");
-        
-        Global.daoPat.getAllPatientsWithComunications();
-        Global.daoPat.getAllPatientsWithoutComunications();
         
         Scanner scan = new Scanner(System.in);
         Messenger messenger = new Messenger();
@@ -68,6 +58,7 @@ public class Clinic {
                 break;
             case 3:
                 messenger.sendMessage();
+                accInterface = new SecretaryAccess();
                 break;
             case 100:
                 System.out.println("\n\nSaindo...");
@@ -98,11 +89,7 @@ public class Clinic {
                     case 100:
                         System.out.println("\n\nSaindo...");
                         System.exit(0);
-                        break; 
-                    default:
-                        System.out.println("\n\nSaindo...");
-                        System.exit(0);
-                        break;        
+                        break;
                 }
             }            
         }

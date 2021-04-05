@@ -56,6 +56,7 @@ public class PatientDAO implements InterfacePatientDAO{
     }
     
     
+    @Override
    public Patient getPatientByName(String searchParam){
       if (patients.size() > 0){
         for (int i = 0; i < patients.size(); i++) {
@@ -76,33 +77,33 @@ public class PatientDAO implements InterfacePatientDAO{
            for (int i = 0; i < patients.size(); i++){
                Patient pat = patients.get(i);
                
-               if (!pat.getEmail().equals("") || !pat.getPhone().equals("")){
+               if (!pat.getEmail().isEmpty() || !pat.getPhone().isEmpty()){
                   pats.add(pat);
                }
            }
        }
        
-        System.out.println(pats);
-
         return pats;
     }
 
     @Override
     public ArrayList<Patient> getAllPatientsWithoutComunications() {
-       ArrayList<Patient> pats = new ArrayList();
+       ArrayList<Patient> pats = patients;
        
        if (patients.size() > 0){
            for (int i = 0; i < patients.size(); i++){
                Patient pat = patients.get(i);
                
-               if (pat.getEmail().isBlank() || pat.getPhone().isBlank()){
-                  pats.add(pat);
+               if (!pat.getEmail().isEmpty()){
+                  pats.remove(pat);
+               }
+               
+                if (!pat.getPhone().isEmpty()){
+                  pats.remove(pat);
                }
            }
        }
-       
-       System.out.println(pats);
-
+ 
         return pats;
     }
    
