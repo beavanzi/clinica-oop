@@ -76,7 +76,7 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
             Appointment appt = appointments.get(i);
                          
                 for (int j = 0; j < patients.size(); j++) {
-                    Patient pat = patients.get(i);
+                    Patient pat = patients.get(j);
 
                     if (pat == appt.getPatient()){
                        newAppts.add(appt);

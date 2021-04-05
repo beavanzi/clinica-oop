@@ -27,6 +27,7 @@ public class SecretaryAccess implements AccessInterface {
     @Override
     public void listAllOperations() {
         System.out.println("------SECRETÁRIA------");
+        System.out.println("0. Voltar");
         System.out.println("1. Criar Paciente");
         System.out.println("2. Atualizar Paciente");
         System.out.println("3. Remover Paciente");
@@ -243,13 +244,6 @@ public class SecretaryAccess implements AccessInterface {
                 System.exit(0);
                 break;
             default:
-                System.out.println("<--Listar Doutores-->");
-                ArrayList<Doctor> docs = sec.getAllDoctors();
-                if (docs != null){
-                    docs.forEach(app -> System.out.println(app.getName()));
-                } else  {
-                    System.out.println("Nenhum doutor existe.");
-                }
                 break;
         }
     }
