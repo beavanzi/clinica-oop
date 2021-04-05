@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package clinic.employees;
+import clinic.Global;
 import clinic.dao.AttendanceDAO;
 import clinic.dao.MedicalRecordDAO;
 import clinic.dao.PatientDAO;
@@ -39,15 +40,25 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     private PatientRecordDAO daoPatRec;
 
     public Doctor() {
+        this.daoPat = Global.daoPat;
+        this.daoDoc = Global.daoDoc;
+        this.daoAtt = Global.daoAtt;
+        this.daoMedRec = Global.daoMedRec;
+        this.daoAdInfo = Global.daoAdInfo;
+        this.daoPatRec = Global.daoPatRec;
     }
 
     public Doctor(String name, String doctorDoc, String id) {
         this.name = name;
         this.doctorDoc = doctorDoc;
         this.id = id;
-        this.daoMedRec = new MedicalRecordDAO();
-        this.daoAtt = new AttendanceDAO();
-        this.daoPat = new PatientDAO();
+        this.daoMedRec = Global.daoMedRec;
+        this.daoAtt = Global.daoAtt;
+        this.daoPat = Global.daoPat;
+        this.daoDoc = Global.daoDoc;
+        this.daoAdInfo = Global.daoAdInfo;
+        this.daoPatRec = Global.daoPatRec;
+                
     }
 
     public String getName() {
