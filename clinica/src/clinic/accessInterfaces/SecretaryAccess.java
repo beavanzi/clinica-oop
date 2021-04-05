@@ -6,7 +6,6 @@
 package clinic.accessInterfaces;
 
 
-import clinic.dao.DoctorDAO;
 import clinic.employees.Doctor;
 import clinic.employees.Secretary;
 import clinic.external.Patient;
@@ -20,10 +19,6 @@ import java.util.Scanner;
  */
 public class SecretaryAccess implements AccessInterface {
     private Secretary sec;
-
-    public SecretaryAccess(DoctorDAO dao) {
-        this.sec = new Secretary(dao);
-    }
     
      public SecretaryAccess() {
         this.sec = new Secretary();
@@ -69,7 +64,7 @@ public class SecretaryAccess implements AccessInterface {
             case 1:
                 System.out.println("<--Criação de Paciente-->");
                 
-                System.out.print("Informe: \nNome:");
+                System.out.print("Informe: \nNome: ");
                 patName = scan.nextLine();
                 System.out.print("Numero de documento: ");
                 docNumber = scan.nextLine();
@@ -151,7 +146,7 @@ public class SecretaryAccess implements AccessInterface {
             case 6:
                 System.out.println("<--Criação de Agendamento-->");
                 
-                System.out.println("Informe: \nDia:");
+                System.out.print("Informe novos dados: \nDia (formato usado aaaa-mm-dd):");
                 day = scan.nextLine();
                 System.out.print("Horário: ");
                 hour = scan.nextLine();
@@ -159,7 +154,7 @@ public class SecretaryAccess implements AccessInterface {
                 docName = scan.nextLine();
                 System.out.print("Nome paciente: ");
                 patName = scan.nextLine();
-                System.out.print("Tipo de visita: (Regular, Retorno)");
+                System.out.print("Tipo de visita(Regular, Retorno): ");
                 visit = scan.nextLine();
 
                 patient = sec.getPatientByName(patName);
@@ -183,7 +178,7 @@ public class SecretaryAccess implements AccessInterface {
                 appt = sec.getAppointmentByDay(searchName);
                 
                 if (appt != null){
-                    System.out.print("Informe novos dados: \nDia:");
+                    System.out.print("Informe novos dados: \nDia (formato usado aaaa-mm-dd):");
                     day = scan.nextLine();
                     System.out.print("Horário: ");
                     hour = scan.nextLine();

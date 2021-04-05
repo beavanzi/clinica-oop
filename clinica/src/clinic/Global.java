@@ -5,7 +5,9 @@
  */
 package clinic;
 
+import clinic.dao.AppointmentDAO;
 import clinic.dao.DoctorDAO;
+import clinic.dao.PatientDAO;
 
 /**
  *
@@ -13,4 +15,6 @@ import clinic.dao.DoctorDAO;
  */
 public class Global {
     public static DoctorDAO daoDoc = new DoctorDAO();
+    public static PatientDAO daoPat = new PatientDAO();
+    public static AppointmentDAO daoAppt = new AppointmentDAO();
 }

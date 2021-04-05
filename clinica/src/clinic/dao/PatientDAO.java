@@ -68,16 +68,42 @@ public class PatientDAO implements InterfacePatientDAO{
       
       return null;
     }
+   
+    public ArrayList<Patient> getAllPatientsWithComunications() {
+       ArrayList<Patient> pats = new ArrayList();
+       
+       if (patients.size() > 0){
+           for (int i = 0; i < patients.size(); i++){
+               Patient pat = patients.get(i);
+               
+               if (!pat.getEmail().equals("") || !pat.getPhone().equals("")){
+                  pats.add(pat);
+               }
+           }
+       }
+       
+        System.out.println(pats);
+
+        return pats;
+    }
 
     @Override
     public ArrayList<Patient> getAllPatientsWithoutComunications() {
-       ArrayList<Patient> pats = patients;
+       ArrayList<Patient> pats = new ArrayList();
        
        if (patients.size() > 0){
-        pats.stream().filter(pat -> pat.getEmail() == null || pat.getEmail() == "" || pat.getPhone() == null || pat.getPhone() == "" );
+           for (int i = 0; i < patients.size(); i++){
+               Patient pat = patients.get(i);
+               
+               if (pat.getEmail().equals("") || pat.getPhone().equals("")){
+                  pats.add(pat);
+               }
+           }
        }
        
-      return pats;
+       System.out.println(pats);
+
+        return pats;
     }
    
    

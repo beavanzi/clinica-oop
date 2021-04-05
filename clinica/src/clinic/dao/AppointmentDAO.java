@@ -69,9 +69,9 @@ public class AppointmentDAO implements InterfaceAppointmentDAO{
 
     @Override
     public ArrayList<Appointment> getAppointmentsByPatients(ArrayList<Patient> patients) {
-        ArrayList<Appointment> newAppts = null;
+        ArrayList<Appointment> newAppts = new ArrayList();
         
-        if (appointments.size() > 0 && patients.size() > 0){
+        if (appointments.size() > 0 && patients != null){
             for (int i = 0; i < appointments.size(); i++) {
             Appointment appt = appointments.get(i);
                          

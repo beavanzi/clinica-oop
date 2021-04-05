@@ -5,7 +5,8 @@
  */
 package clinic.dao.interfaces;
 
-import clinic.external.Patient;
+import clinic.resources.Appointment;
+import java.util.ArrayList;
 
 
 /**
@@ -13,5 +14,5 @@ import clinic.external.Patient;
  * @author biaav
  */
 public interface InterfaceMessageDAO {
-    void sendMessage(Patient pat, String message);
+    void sendMessage(ArrayList<Appointment> appointments);
 }

@@ -6,7 +6,8 @@
 package clinic.dao;
 
 import clinic.dao.interfaces.InterfaceMessageDAO;
-import clinic.external.Patient;
+import clinic.resources.Appointment;
+import java.util.ArrayList;
 
 
 /**
@@ -16,20 +17,20 @@ import clinic.external.Patient;
 public class MessageDAO implements InterfaceMessageDAO {
 
     @Override
-    public void sendMessage(Patient pat, String message) {
-        String subjectEmail = pat.getEmail();
-        String subjectPhone = pat.getPhone();
-        String msg = message;
-
-        
-        if (!subjectEmail.isEmpty()){
-            System.out.println("Enviando e-mail para " + subjectEmail + " com assunto: " + msg);
-        }
-        
-        if (!subjectPhone.isEmpty()){
-            System.out.println("Enviando SMS para " + subjectPhone + " com assunto: " + msg);
-        }
-        
+    public void sendMessage(ArrayList<Appointment> appointments) {
+        if (appointments.size() > 0) {
+          for(int i = 0; i < appointments.size(); i++){
+              Appointment appt = appointments.get(i);
+              
+              if (!appt.getPatient().getEmail().isEmpty()){
+                  System.out.println("Enviando email para " + appt.getPatient().getEmail() + ", paciente " + appt.getPatient().getName() + ". Ele/a tem consulta amanhã.");
+              }
+              
+              if (!appt.getPatient().getPhone().isEmpty()){
+                  System.out.println("Enviando SMS para " + appt.getPatient().getEmail() + ", paciente " + appt.getPatient().getName() + ". Ele/a tem consulta amanhã.");
+              }
+          } 
+       }  
     }
     
 }

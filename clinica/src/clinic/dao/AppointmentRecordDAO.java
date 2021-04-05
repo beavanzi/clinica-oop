@@ -9,7 +9,6 @@ import clinic.dao.interfaces.InterfaceAppointmentRecordDAO;
 import clinic.resources.Appointment;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -20,7 +19,10 @@ public class AppointmentRecordDAO implements InterfaceAppointmentRecordDAO {
     @Override
     public ArrayList<Appointment> getNextDayAppointments(ArrayList<Appointment> appts) {
         LocalDate date = LocalDate.now().plusDays(1);
-       appts.stream().filter(appt -> appt.getDay().equals(date.toString()) );
+        
+        if (appts != null){
+            appts.stream().filter(appt -> appt.getDay().equals(date.toString()) );
+        }
        
        return appts;
     }

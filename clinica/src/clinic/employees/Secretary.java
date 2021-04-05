@@ -34,28 +34,19 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     public Secretary() {
         this.secName = secName;
         this.secId = secId;
-        this.daoPat = new PatientDAO();
-        this.daoAppt = new AppointmentDAO();
-        this.daoApptRec = new AppointmentRecordDAO();
+        this.daoPat = Global.daoPat;
+        this.daoAppt = Global.daoAppt;
         this.daoDoc = Global.daoDoc;
+        this.daoApptRec = new AppointmentRecordDAO();
     }
     
-      public Secretary(DoctorDAO daoDoc) {
-        this.secName = secName;
-        this.secId = secId;
-        this.daoPat = new PatientDAO();
-        this.daoAppt = new AppointmentDAO();
-        this.daoApptRec = new AppointmentRecordDAO();
-        this.daoDoc = Global.daoDoc;
-    }
-
     public Secretary(String secName, String secId) {
         this.secName = secName;
         this.secId = secId;
-        this.daoPat = new PatientDAO();
-        this.daoAppt = new AppointmentDAO();
+        this.daoPat = Global.daoPat;
+        this.daoAppt = Global.daoAppt;
+        this.daoDoc = Global.daoDoc;
         this.daoApptRec = new AppointmentRecordDAO();
-        this.daoDoc = new DoctorDAO();
     }
 
     public String getSecName() {
