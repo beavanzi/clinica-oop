@@ -7,6 +7,7 @@ package clinic.dao.interfaces;
 import clinic.resources.MedicalRecord;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
+import java.util.ArrayList;
 /**
  *
  * @author sarahanduca
@@ -16,8 +17,6 @@ public interface InterfaceMedicalRecordDAO {
     String getPrescription(MedicalRecord medRec);
     String getAttestation(MedicalRecord medRec);
     String getFollowUp(MedicalRecord medRec);
-    
-   // char getAttendance(MedicalRecord medRec);
-    
-    //void deleteMedicalRecord(MedicalRecord medRec);
+    public ArrayList<MedicalRecord> getAllMedicalRecord();
+    public MedicalRecord getMedicalRecord(String patientName);
 }

@@ -189,6 +189,16 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     }
     
     @Override
+    public ArrayList<MedicalRecord> getAllMedicalRecord(){
+        return this.daoMedRec.getAllMedicalRecord();
+    }
+    
+    @Override
+    public MedicalRecord getMedicalRecord(String patientName){
+       return this.daoMedRec.getMedicalRecord(patientName);
+    }
+    
+    @Override
     public PatientRecord createPatientRecord(String symptoms, String diagnosis, String treatment, Patient patient){
         return this.daoPatRec.createPatientRecord(symptoms, diagnosis, treatment, patient);
     }

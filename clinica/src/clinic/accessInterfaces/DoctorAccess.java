@@ -31,11 +31,11 @@ public class DoctorAccess implements AccessInterface {
         System.out.println("1. Criar Dado Adicional de Paciente");
         System.out.println("2. Atualizar Dado Adicional de Paciente");
         System.out.println("3. Remover Dado Adicional de Paciente");
-        System.out.println("4. Listar todos os pacientes");
-        System.out.println("5. Criar prontuário");
-        System.out.println("6. Atualizar prontuário");
-        System.out.println("7. Remover prontuário");
-        System.out.println("8. Gerar relatorio de médico");
+        System.out.println("4. Listar todos os Pacientes");
+        System.out.println("5. Criar Prontuário");
+        System.out.println("6. Atualizar Prontuário");
+        System.out.println("7. Remover Prontuário");
+        System.out.println("8. Gerar Relatorio de Médico");
         System.out.println("9. Consultar Receita");
         System.out.println("10. Consultar Atestado");
         System.out.println("11. Consultar Acompanhamento");
@@ -127,14 +127,14 @@ public class DoctorAccess implements AccessInterface {
                 }
                 break;
             case 4:
-                 System.out.println("<--Listar todos os pacientes-->\n");
+                System.out.println("<--Listar todos os pacientes-->\n");
                 
                 ArrayList<Patient> patients = doc.getAllPatients();
                 patients.forEach(pat -> System.out.println(pat));
                 
                 break;
             case 5:
-                 System.out.println("<--Criação Prontuário de Paciente-->");
+                System.out.println("<--Criação Prontuário de Paciente-->");
                 
                 System.out.println("\nInforme o nome do paciente desejado: ");
                 searchName = scan.nextLine();
@@ -161,7 +161,7 @@ public class DoctorAccess implements AccessInterface {
                 searchName = scan.nextLine();
                 patRec = doc.getPatientRecord(searchName);
                 
-                  if (patRec != null){
+                if (patRec != null){
                     System.out.println("Digite o sintoma: ");
                     symptoms = scan.nextLine();
                     System.out.println("Digite o diagnóstico da doença: ");
@@ -180,7 +180,7 @@ public class DoctorAccess implements AccessInterface {
                 System.out.println("\nInforme o nome do paciente desejado: ");
                 searchName = scan.nextLine();
                 patRec = doc.getPatientRecord(searchName);
-                  if (patRec != null){
+                if (patRec != null){
                       
                     doc.deletePatientRecord(patRec);
                 }else{
@@ -202,9 +202,9 @@ public class DoctorAccess implements AccessInterface {
                 docName = scan.nextLine();
                
                 patient = doc.getPatientByName(patName);
-                 if (patient == null) {
-                        System.out.println("Paciente não encontrado");
-                        break;
+                if (patient == null) {
+                    System.out.println("Paciente não encontrado");
+                    break;
                 }
                 doctor = doc.getDoctorByName(docName);
                 if (doctor == null){
@@ -216,13 +216,32 @@ public class DoctorAccess implements AccessInterface {
                 
                 break;
             case 9:
-            System.out.println("<--Consultar Receita Médica-->");
-                
-                System.out.println("<--Atualização de Agendamento-->");
-                System.out.print("Digite o nome do paciente: > ");
+                System.out.println("<--Consultar Receita Médica-->");
+
+                System.out.println("\nInforme o nome do paciente desejado: ");
                 searchName = scan.nextLine();
-               // medRec = doc.getMedicalRecord(searchName);
-               
+                medRec = doc.getMedicalRecord(searchName);
+
+                patient = doc.getPatientByName(searchName);
+                if (patient == null) {
+                    System.out.println("Paciente não encontrado");
+                    break;
+                }
+                doctor = doc.getDoctorByName(searchName);
+                if (doctor == null){
+                    System.out.println("Doutor não encontrado");
+                    break;
+                }
+
+                doc.getPrescription(medRec);
+                break;   
+            case 10:
+                System.out.println("<--Consultar Atestado Médico-->");
+                
+                System.out.println("\nInforme o nome do paciente desejado: ");
+                searchName = scan.nextLine();
+                medRec = doc.getMedicalRecord(searchName);
+                
                 patient = doc.getPatientByName(searchName);
                 if (patient == null) {
                     System.out.println("Paciente não encontrado");
@@ -234,13 +253,27 @@ public class DoctorAccess implements AccessInterface {
                     break;
                 }
                  
-               // doc.getPrescription(medRec);
-                break;   
-            case 10:
-                System.out.println("Operação 10 médico");
+                doc.getAttestation(medRec);
                 break; 
             case 11:
-                System.out.println("Operação 11 médico");
+                System.out.println("<--Consultar Acompanhamento Médico-->");
+                
+                System.out.println("\nInforme o nome do paciente desejado: ");
+                searchName = scan.nextLine();
+                medRec = doc.getMedicalRecord(searchName);
+                
+                patient = doc.getPatientByName(searchName);
+                if (patient == null) {
+                    System.out.println("Paciente não encontrado");
+                    break;
+                }
+                doctor = doc.getDoctorByName(searchName);
+                if (doctor == null){
+                    System.out.println("Doutor não encontrado");
+                    break;
+                }
+                 
+                doc.getFollowUp(medRec);
                 break; 
             case 12:
                 System.out.println("<--Criação de Atendimento-->");
