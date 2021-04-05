@@ -95,7 +95,7 @@ public class PatientDAO implements InterfacePatientDAO{
            for (int i = 0; i < patients.size(); i++){
                Patient pat = patients.get(i);
                
-               if (pat.getEmail().equals("") || pat.getPhone().equals("")){
+               if (pat.getEmail().isBlank() || pat.getPhone().isBlank()){
                   pats.add(pat);
                }
            }

@@ -27,7 +27,7 @@ public class MessageDAO implements InterfaceMessageDAO {
               }
               
               if (!appt.getPatient().getPhone().isEmpty()){
-                  System.out.println("Enviando SMS para " + appt.getPatient().getEmail() + ", paciente " + appt.getPatient().getName() + ". Ele/a tem consulta amanhã.");
+                  System.out.println("Enviando SMS para " + appt.getPatient().getPhone() + ", paciente " + appt.getPatient().getName() + ". Ele/a tem consulta amanhã.");
               }
           } 
        }  
