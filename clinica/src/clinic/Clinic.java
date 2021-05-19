@@ -12,6 +12,7 @@ import clinic.accessInterfaces.SecretaryAccess;
 import clinic.services.Messenger;
 import java.util.Scanner;
 
+
 /**
  *
  * @author biaav
@@ -41,6 +42,7 @@ public class Clinic {
         
         return opt;   
     }
+    
     
     public static void main(String[] args) {
         

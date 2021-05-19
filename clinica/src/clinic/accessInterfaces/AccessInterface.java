@@ -12,4 +12,5 @@ package clinic.accessInterfaces;
 public interface AccessInterface {
     void listAllOperations();
     void mapping(int operation);
+
 }
