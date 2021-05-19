@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package clinic.view.docPages;
-
+import clinic.employees.Doctor;
+import clinic.resources.AditionalInfo;
+import clinic.external.Patient;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +14,17 @@ import javax.swing.JOptionPane;
  * @author sarahanduca
  */
 public class UpdateAditionalPatientDataPage extends javax.swing.JInternalFrame {
-
+    private Doctor doc;
+    private Patient pat;
+    private AditionalInfo adInfo;
+    
     /**
      * Creates new form UpdateAditionalPatientDataPage
      */
-    public UpdateAditionalPatientDataPage() {
+    public UpdateAditionalPatientDataPage(Patient patient) {
         initComponents();
+        this.doc = new Doctor();
+        this.pat = patient;
     }
 
     /**
@@ -132,11 +139,15 @@ public class UpdateAditionalPatientDataPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_allergyInputActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // Criar paciente
+        // atualizar informação adicional
 
         String allergy = allergyInput.getText();
         String badHabit = badHabitInput.getText();
         String cirurgy = cirurgyInput.getText();
+        
+        this.adInfo = new AditionalInfo(badHabit, allergy, cirurgy, this.pat);
+        
+        doc.updateAditionalInfo(this.adInfo, badHabit, allergy, cirurgy);
         
         JOptionPane.showMessageDialog(rootPane, "Informações Adicionais atualizadas com sucesso\n\n"
                 + allergy + "\n" + badHabit  + "\n" + cirurgy);

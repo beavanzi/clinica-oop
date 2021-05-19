@@ -17,6 +17,9 @@ import clinic.view.docPages.CreateAditionalPatientDataPage;
 import clinic.view.docPages.CreateMedicalRecordPage;
 import clinic.external.Patient;
 import clinic.employees.Doctor;
+import clinic.employees.Secretary;
+import clinic.resources.PatientRecord;
+import clinic.resources.AditionalInfo;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,12 +28,16 @@ import javax.swing.JOptionPane;
  */
 public class MainPage extends javax.swing.JFrame {
     private Doctor doc;
+    private Secretary sec;
+    private PatientRecord patRec;
+    private AditionalInfo adInfo;
     /**
      * Creates new form MainPage
      */
     public MainPage() {
         initComponents();
         this.doc = new Doctor();
+        this.sec = new Secretary();
     }
 
     /**
@@ -47,7 +54,6 @@ public class MainPage extends javax.swing.JFrame {
         secretarioMenu = new javax.swing.JMenu();
         criarPacienteEscolhaMenu = new javax.swing.JMenuItem();
         atualizarPacienteEscolhaMenu = new javax.swing.JMenuItem();
-        encontrarPacienteEscolhaMenu = new javax.swing.JMenuItem();
         removerPacienteEscolhaMenu = new javax.swing.JMenuItem();
         criarAgendamentoEscolhaMenu = new javax.swing.JMenuItem();
         atualizarAgendamentoEscolhaMenu = new javax.swing.JMenuItem();
@@ -95,14 +101,6 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         secretarioMenu.add(atualizarPacienteEscolhaMenu);
-
-        encontrarPacienteEscolhaMenu.setText("Encontrar Paciente Pelo Nome");
-        encontrarPacienteEscolhaMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encontrarPacienteEscolhaMenuActionPerformed(evt);
-            }
-        });
-        secretarioMenu.add(encontrarPacienteEscolhaMenu);
 
         removerPacienteEscolhaMenu.setText("Remover Paciente");
         removerPacienteEscolhaMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -241,9 +239,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void criarDadoAdicionalEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarDadoAdicionalEscolhaMenuActionPerformed
         // criar dado adicional
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser atualizado:");
-        if(patientName.equals("Roberto")){
-            CreateAditionalPatientDataPage createAdPatientData = new CreateAditionalPatientDataPage();
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            CreateAditionalPatientDataPage createAdPatientData = new CreateAditionalPatientDataPage(pat);
             jDesktopPane1.add(createAdPatientData);
             createAdPatientData.setVisible(true);
         }else{
@@ -253,9 +252,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void atualizarPacienteEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarPacienteEscolhaMenuActionPerformed
         // Atualizar Paciente pelo nome:
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser atualizado:");
-        if(patientName.equals("Roberto")){
-            UpdatePatientPage updatePatientPage = new UpdatePatientPage();
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            UpdatePatientPage updatePatientPage = new UpdatePatientPage(pat);
             jDesktopPane1.add(updatePatientPage);
             updatePatientPage.setVisible(true);
         }else{
@@ -264,25 +264,17 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_atualizarPacienteEscolhaMenuActionPerformed
 
     private void removerPacienteEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerPacienteEscolhaMenuActionPerformed
-        // Remover Paciente pelo e-mail:
+        // Remover Paciente:
         
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-             JOptionPane.showMessageDialog(rootPane, "Paciente Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            sec.deletePatient(pat);
+            JOptionPane.showMessageDialog(rootPane, "Paciente Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removerPacienteEscolhaMenuActionPerformed
-
-    private void encontrarPacienteEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encontrarPacienteEscolhaMenuActionPerformed
-        // Encontrar Paciente pelo nome:
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
-        if(patientName.equals("Roberto")){
-             //displaypacienteecontrado
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_encontrarPacienteEscolhaMenuActionPerformed
 
     private void criarAgendamentoEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarAgendamentoEscolhaMenuActionPerformed
         // criar atendimento
@@ -293,8 +285,9 @@ public class MainPage extends javax.swing.JFrame {
 
     private void atualizarAgendamentoEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarAgendamentoEscolhaMenuActionPerformed
         // atualizar atendimento
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser atualizado:");
-        if(patientName.equals("Roberto")){
+       String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
             UpdateAppointmentPage updateAppointment = new UpdateAppointmentPage();
             jDesktopPane1.add(updateAppointment);
             updateAppointment.setVisible(true);
@@ -305,9 +298,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void atualizarDadoAdicionalEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarDadoAdicionalEscolhaMenuActionPerformed
         // atualizar dado adicional
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-            UpdateAditionalPatientDataPage updateAditionalDataPage = new UpdateAditionalPatientDataPage();
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            UpdateAditionalPatientDataPage updateAditionalDataPage = new UpdateAditionalPatientDataPage(pat);
             jDesktopPane1.add(updateAditionalDataPage);
             updateAditionalDataPage.setVisible(true);
         }else{
@@ -317,9 +311,11 @@ public class MainPage extends javax.swing.JFrame {
 
     private void removerDadoAdcicionalEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerDadoAdcicionalEscolhaMenuActionPerformed
         // remover dado adicional
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-             JOptionPane.showMessageDialog(rootPane, "Dado Adicional Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            doc.deleteAditionalInfo(this.adInfo);
+            JOptionPane.showMessageDialog(rootPane, "Dado Adicional Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -328,16 +324,25 @@ public class MainPage extends javax.swing.JFrame {
 
     private void criarRelatorioMedicoEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarRelatorioMedicoEscolhaMenuActionPerformed
         // relatório médico
-        CreateMedicalRecordPage createMedicalRecord = new CreateMedicalRecordPage();
-        jDesktopPane1.add(createMedicalRecord);
-        createMedicalRecord.setVisible(true);
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            CreateMedicalRecordPage createMedicalRecord = new CreateMedicalRecordPage(pat);
+            jDesktopPane1.add(createMedicalRecord);
+            createMedicalRecord.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_criarRelatorioMedicoEscolhaMenuActionPerformed
 
     private void atualizarRelatorioMedicoEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarRelatorioMedicoEscolhaMenuActionPerformed
         // atualizar relatório médico
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-            UpdateMedicalRecord updateMedicalRecord = new UpdateMedicalRecord();
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            UpdateMedicalRecord updateMedicalRecord = new UpdateMedicalRecord(pat);
             jDesktopPane1.add(updateMedicalRecord);
             updateMedicalRecord.setVisible(true);
         }else{
@@ -347,8 +352,9 @@ public class MainPage extends javax.swing.JFrame {
 
     private void removerRelatorioMedicoEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRelatorioMedicoEscolhaMenuActionPerformed
         // remover relatório médico
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);        
+        if(pat != null){
              JOptionPane.showMessageDialog(rootPane, "Relatório Médico Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -357,9 +363,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void atualizarProntuarioEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarProntuarioEscolhaMenuActionPerformed
         //atualizar prontuário
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-            UpdatePatientRecordPage updatePatientRecord = new UpdatePatientRecordPage();
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            UpdatePatientRecordPage updatePatientRecord = new UpdatePatientRecordPage(pat);
             jDesktopPane1.add(updatePatientRecord);
             updatePatientRecord.setVisible(true);
         }else{
@@ -369,8 +376,6 @@ public class MainPage extends javax.swing.JFrame {
 
     private void criarPronturarioEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPronturarioEscolhaMenuActionPerformed
         // criar prontuário
-       
-        
         String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
         Patient pat = doc.getPatientByName(searchName);
         if(pat != null){
@@ -385,9 +390,11 @@ public class MainPage extends javax.swing.JFrame {
 
     private void removerProntuarioEscolhaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerProntuarioEscolhaMenuActionPerformed
         // remover prontuário
-        String patientName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser removido:");
-        if(patientName.equals("Roberto")){
-             JOptionPane.showMessageDialog(rootPane, "Prontuário Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
+        String searchName = JOptionPane.showInputDialog(rootPane, "Nome do Paciente para ser encontrado:");
+        Patient pat = doc.getPatientByName(searchName);
+        if(pat != null){
+            doc.deletePatientRecord(this.patRec);
+            JOptionPane.showMessageDialog(rootPane, "Prontuário Removido com sucesso", "Remoção", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -441,7 +448,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem criarPacienteEscolhaMenu;
     private javax.swing.JMenuItem criarPronturarioEscolhaMenu;
     private javax.swing.JMenuItem criarRelatorioMedicoEscolhaMenu;
-    private javax.swing.JMenuItem encontrarPacienteEscolhaMenu;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu medicoMenu;

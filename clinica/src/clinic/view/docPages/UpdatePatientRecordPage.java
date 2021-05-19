@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package clinic.view.docPages;
-
+import clinic.employees.Doctor;
+import clinic.external.Patient;
+import clinic.resources.PatientRecord;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +14,16 @@ import javax.swing.JOptionPane;
  * @author sarahanduca
  */
 public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
-
+    private Doctor doc;
+    private Patient pat;
+    private PatientRecord patRec;
     /**
      * Creates new form UpdatePatientRecordPage
      */
-    public UpdatePatientRecordPage() {
+    public UpdatePatientRecordPage(Patient patient) {
         initComponents();
+        this.doc = new Doctor();
+        this.pat = patient;
     }
 
     /**
@@ -35,7 +41,7 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
         diagnosisInput = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         treatmentInput = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Atualizar Prontuário");
@@ -52,11 +58,11 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Prescrição para Tratamento");
 
-        jButton1.setBackground(new java.awt.Color(60, 103, 15));
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setBackground(new java.awt.Color(60, 103, 15));
+        saveButton.setText("Salvar");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
@@ -86,7 +92,7 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(360, 360, 360)
-                        .addComponent(jButton1)))
+                        .addComponent(saveButton)))
                 .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,7 +111,7 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(treatmentInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(saveButton)
                 .addGap(14, 14, 14))
         );
 
@@ -116,23 +122,27 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_symptomsInputActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // save content
         String treatment = treatmentInput.getText();
         String symptoms = symptomsInput.getText();
         String diagnosis = diagnosisInput.getText();
+        this.patRec = new PatientRecord(symptoms, diagnosis, treatment, this.pat);
+        
+        doc.updatePatientRecord(this.patRec, symptoms, diagnosis, treatment);
+        
         JOptionPane.showMessageDialog(rootPane, "Prontuário Atualizado com Sucesso\n\n"
                 + treatment + "\n" + symptoms + "\n" + diagnosis);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_saveButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField diagnosisInput;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton saveButton;
     private javax.swing.JTextField symptomsInput;
     private javax.swing.JTextField treatmentInput;
     // End of variables declaration//GEN-END:variables

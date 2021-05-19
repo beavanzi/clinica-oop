@@ -5,7 +5,7 @@
  */
 package clinic.view.secPages;
 import clinic.employees.Secretary;
-import javax.swing.JFrame;
+import clinic.external.Patient;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class UpdatePatientPage extends javax.swing.JInternalFrame {
     private Secretary sec;
+    private Patient pat;
     /**
      * Creates new form UpdatePatientPage
      */
-    public UpdatePatientPage() {
+    public UpdatePatientPage(Patient patient) {
         initComponents();
+        this.sec = new Secretary();
+        this.pat = patient;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -226,7 +229,8 @@ public class UpdatePatientPage extends javax.swing.JInternalFrame {
         String name = nameInput.getText();
         String phone = phoneInput.getText();
         String docNumber = docNumInput.getText();
-//        sec.createPatient(nome, numeroDocumento, aniversario, endereco, tel, email, convenio);
+        
+       sec.updatePatient(this.pat, name, docNumber, birthDate, address, phone, email, healthInsurance);
        JOptionPane.showMessageDialog(rootPane, "Paciente Atualizado com sucesso\n\n"
                 + name + "\n" + email  + "\n" + birthDate + "\n" + healthInsurance + "\n" + address + "\n" + phone + "\n" + docNumber );
   

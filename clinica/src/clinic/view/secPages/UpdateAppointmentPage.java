@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package clinic.view.secPages;
-
+import clinic.employees.Secretary;
+import clinic.employees.Doctor;
+import clinic.external.Patient;
+import clinic.resources.Appointment;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +15,16 @@ import javax.swing.JOptionPane;
  * @author sarahanduca
  */
 public class UpdateAppointmentPage extends javax.swing.JInternalFrame {
-
+    private Secretary sec;
+    private Doctor doc;
+    private Patient pat;
+    private Appointment appt;
     /**
      * Creates new form updateAppointmentPage
      */
     public UpdateAppointmentPage() {
         initComponents();
+        this.sec = new Secretary();
     }
 
     /**
@@ -161,10 +168,20 @@ public class UpdateAppointmentPage extends javax.swing.JInternalFrame {
         String hour = hourInput.getText();
         String patientName = patientNameInput.getText();
         String docName = docNameInput.getText();
-       
+        String visit = visitSelector.getToolTipText();
+        
+        pat = sec.getPatientByName(patientName);
+        doc = sec.getDoctorByName(docName);
+        
+        if(pat != null){
+            this.appt = new Appointment(date, hour, this.doc, this.pat, visit);
+            sec.updateAppointment(appt, date, hour, this.doc, this.pat, visit);
         
         JOptionPane.showMessageDialog(rootPane, "Agendamento Atualizado com sucesso\n\n"
                 + date + "\n" + hour  + "\n" + patientName + "\n" + docName);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado");
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
 
