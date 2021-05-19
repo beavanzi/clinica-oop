@@ -6,7 +6,6 @@
 package clinic.view.docPages;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
-import clinic.resources.PatientRecord;
 import javax.swing.JOptionPane;
 
 /**

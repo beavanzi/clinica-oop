@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package clinic.view.docPages;
-
+import clinic.employees.Doctor;
+import clinic.external.Patient;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +13,15 @@ import javax.swing.JOptionPane;
  * @author sarahanduca
  */
 public class CreateAditionalPatientDataPage extends javax.swing.JInternalFrame {
-
+    private Doctor doc;
+    private Patient pat;
     /**
      * Creates new form CreateAditionalPatientDataPage
      */
-    public CreateAditionalPatientDataPage() {
+    public CreateAditionalPatientDataPage(Patient patient) {
         initComponents();
+        this.doc = new Doctor();
+        this.pat = patient;
     }
 
     /**
@@ -130,6 +134,8 @@ public class CreateAditionalPatientDataPage extends javax.swing.JInternalFrame {
         String allergy = allergyInput.getText();
         String badHabit = badHabitInput.getText();
         String cirurgy = cirurgyInput.getText();
+        
+        doc.createAditionalInfo(badHabit, allergy, cirurgy, this.pat);
         
         JOptionPane.showMessageDialog(rootPane, "Informações Adicionais criadas com sucesso\n\n"
                 + allergy + "\n" + badHabit  + "\n" + cirurgy);

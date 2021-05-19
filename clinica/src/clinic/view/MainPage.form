@@ -25,14 +25,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atualizarPacienteEscolhaMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="encontrarPacienteEscolhaMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Encontrar Paciente Pelo Nome"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="encontrarPacienteEscolhaMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="removerPacienteEscolhaMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Remover Paciente"/>
