@@ -171,15 +171,16 @@ public class CreateAppointmentPage extends javax.swing.JInternalFrame {
         String patientName = namePatientInput.getText();
         String docName = nameDocInput.getText();
         String visit = visitSelector.getToolTipText();
-  
-        pat = sec.getPatientByName(patientName);
-        doc = sec.getDoctorByName(docName);
-        if(pat != null){
+        
+        try {
+            pat = sec.getPatientByName(patientName);
+            doc = sec.getDoctorByName(docName);
             sec.createAppointment(date, hour, doc, pat, visit);
             JOptionPane.showMessageDialog(rootPane, "Agendamento Criado com sucesso\n\n"
                 + date + "\n" + hour  + "\n" + patientName + "\n" + docName);
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado");
+            this.dispose();
+        }catch (Throwable e){
+             JOptionPane.showMessageDialog(rootPane, "Erro ao criar agendamento. Erro: " + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_saveButtonActionPerformed

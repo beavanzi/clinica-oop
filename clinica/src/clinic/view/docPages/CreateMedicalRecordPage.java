@@ -151,10 +151,13 @@ public class CreateMedicalRecordPage extends javax.swing.JInternalFrame {
         String patientName = patientNameInput.getText();
         String docName = docNameInput.getText();
         String prescription = prescriptionInput.getText();
+        
 
-        doc.createMedicalRecord(prescription, attestation, followUp, this.doc.getDoctorByName(docName), this.pat);
+        Doctor doctor = doc.getDoctorByName(docName);
+        doc.createMedicalRecord(prescription, attestation, followUp, doctor, this.pat);
         JOptionPane.showMessageDialog(rootPane, "Relatório Médico criado com sucesso\n\n"
-            + attestation + "\n" + followUp  + "\n" + patientName + "\n" + docName + "\n" + prescription);
+          + attestation + "\n" + followUp  + "\n" + patientName + "\n" + docName + "\n" + prescription);
+        this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void prescriptionInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescriptionInputActionPerformed

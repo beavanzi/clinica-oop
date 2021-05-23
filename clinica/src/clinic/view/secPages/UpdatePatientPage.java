@@ -14,14 +14,16 @@ import javax.swing.JOptionPane;
  */
 public class UpdatePatientPage extends javax.swing.JInternalFrame {
     private Secretary sec;
-    private Patient pat;
+   // private Patient pat;
+    private String searchName;
     /**
      * Creates new form UpdatePatientPage
      */
-    public UpdatePatientPage(Patient patient) {
+    public UpdatePatientPage(String searchName) {
         initComponents();
         this.sec = new Secretary();
-        this.pat = patient;
+       // this.pat = patient;
+        this.searchName = searchName;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,10 +232,14 @@ public class UpdatePatientPage extends javax.swing.JInternalFrame {
         String phone = phoneInput.getText();
         String docNumber = docNumInput.getText();
         
-       sec.updatePatient(this.pat, name, docNumber, birthDate, address, phone, email, healthInsurance);
-       JOptionPane.showMessageDialog(rootPane, "Paciente Atualizado com sucesso\n\n"
+        try {
+            sec.updatePatient(this.searchName, name, docNumber, birthDate, address, phone, email, healthInsurance);
+            JOptionPane.showMessageDialog(rootPane, "Paciente Atualizado com sucesso\n\n"
                 + name + "\n" + email  + "\n" + birthDate + "\n" + healthInsurance + "\n" + address + "\n" + phone + "\n" + docNumber );
-  
+            this.dispose();
+        } catch (Throwable e) {
+            JOptionPane.showMessageDialog(rootPane, "Erro na atualização. Erro: " + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_saveBotaoActionPerformed
 
 

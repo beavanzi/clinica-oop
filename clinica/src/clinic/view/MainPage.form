@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="secretarioMenu">
+        <Menu class="javax.swing.JMenu" name="relatorioAgendamentosMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Secret&#xe1;rio"/>
           </Properties>
@@ -53,11 +53,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gerar Relat&#xf3;rio de Agendamentos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="relatorioAgendamentoEscolhaMenuActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="cancelarAgendamentoEscolhaMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cancelar Agendamento"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarAgendamentoEscolhaMenuActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -98,20 +104,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="criarRelatorioMedicoEscolhaMenuActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="atualizarRelatorioMedicoEscolhaMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="listarRelatoriosMedicosEscolhaMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Atualizar Relat&#xf3;rio M&#xe9;dico"/>
+                <Property name="text" type="java.lang.String" value="Listar todos os Relat&#xf3;rios M&#xe9;dicos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atualizarRelatorioMedicoEscolhaMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="removerRelatorioMedicoEscolhaMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Remover Relat&#xf3;rio M&#xe9;dico"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removerRelatorioMedicoEscolhaMenuActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listarRelatoriosMedicosEscolhaMenuActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="criarPronturarioEscolhaMenu">
@@ -142,8 +140,21 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="agendamentoMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Agendamento"/>
+            <Property name="text" type="java.lang.String" value="Mensageria"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agendamentoMenuActionPerformed"/>
+          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="enviarSMSEmail">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Enviar SMS e emails"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enviarSMSEmailActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

@@ -15,16 +15,17 @@ import javax.swing.JOptionPane;
  */
 public class UpdateAditionalPatientDataPage extends javax.swing.JInternalFrame {
     private Doctor doc;
+    private Integer id;
     private Patient pat;
-    private AditionalInfo adInfo;
-    
+
+
     /**
      * Creates new form UpdateAditionalPatientDataPage
      */
-    public UpdateAditionalPatientDataPage(Patient patient) {
+    public UpdateAditionalPatientDataPage(Integer id) {
         initComponents();
         this.doc = new Doctor();
-        this.pat = patient;
+        this.id = id;
     }
 
     /**
@@ -144,13 +145,14 @@ public class UpdateAditionalPatientDataPage extends javax.swing.JInternalFrame {
         String allergy = allergyInput.getText();
         String badHabit = badHabitInput.getText();
         String cirurgy = cirurgyInput.getText();
-        
-        this.adInfo = new AditionalInfo(badHabit, allergy, cirurgy, this.pat);
-        
-        doc.updateAditionalInfo(this.adInfo, badHabit, allergy, cirurgy);
-        
-        JOptionPane.showMessageDialog(rootPane, "Informações Adicionais atualizadas com sucesso\n\n"
+
+        try {
+            doc.updateAditionalInfo(this.id, badHabit, allergy, cirurgy);
+            JOptionPane.showMessageDialog(rootPane, "Informações Adicionais atualizadas com sucesso\n\n"
                 + allergy + "\n" + badHabit  + "\n" + cirurgy);
+        } catch (Throwable e) {
+            JOptionPane.showMessageDialog(rootPane, "Erro na atualização. Erro: " + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

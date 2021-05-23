@@ -5,14 +5,24 @@
  */
 package clinic.resources;
 import clinic.external.Patient;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 /**
  *
  * @author sarahanduca
  */
+@Entity
 public class PatientRecord {
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
     private String symtoms;
     private String diadnosis;
     private String treatment;
+    @OneToOne
     private Patient patient;
 
     public PatientRecord(String symtoms, String diadnosis, String treatment, Patient patient) {

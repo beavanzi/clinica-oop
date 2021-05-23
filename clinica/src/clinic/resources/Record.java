@@ -8,14 +8,26 @@ package clinic.resources;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
  * @author biaav
  */
+@Entity
 public class Record {
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
     private Date date;
+    @OneToOne
     private Patient patient;
+    @Transient
     private Doctor doctor;
 
     public Record() {

@@ -8,6 +8,7 @@ package clinic.dao;
 import clinic.dao.interfaces.InterfaceMessageDAO;
 import clinic.resources.Appointment;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class MessageDAO implements InterfaceMessageDAO {
 
     @Override
-    public void sendMessage(ArrayList<Appointment> appointments) {
+    public void sendMessage(List<Appointment> appointments) {
         if (appointments.size() > 0) {
           for(int i = 0; i < appointments.size(); i++){
               Appointment appt = appointments.get(i);

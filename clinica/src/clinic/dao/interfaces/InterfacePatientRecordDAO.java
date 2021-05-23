@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public interface InterfacePatientRecordDAO {
     
    
-    public PatientRecord createPatientRecord(String symptoms, String diagnosis, String treatment, Patient patient);
-    public void updatePatientRecord(PatientRecord patRec, String symptoms, String diagnosis, String treatment);
-    public void deletePatientRecord(PatientRecord patRec) ;
-    public ArrayList<PatientRecord> getAllPatientRecord();
-    public PatientRecord getPatientRecord(String patientName);
+    public void createPatientRecord(String symptoms, String diagnosis, String treatment, Patient patient);
+    public void updatePatientRecord(String symptoms, String diagnosis, String treatment, Integer patientId);
+    public void deletePatientRecord(Integer patientId) ;
+//    public ArrayList<PatientRecord> getAllPatientRecord();
+//    public PatientRecord getPatientRecord(String patientName);
 }

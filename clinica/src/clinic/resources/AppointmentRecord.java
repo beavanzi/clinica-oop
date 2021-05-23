@@ -5,11 +5,20 @@
  */
 package clinic.resources;
 
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author biaav
  */
 public class AppointmentRecord {
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
+    @OneToOne
     private Appointment appointment;
 
     public AppointmentRecord() {

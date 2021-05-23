@@ -16,15 +16,15 @@ import javax.swing.JOptionPane;
  */
 public class UpdateAppointmentPage extends javax.swing.JInternalFrame {
     private Secretary sec;
-    private Doctor doc;
-    private Patient pat;
-    private Appointment appt;
+    private Integer id;
+
     /**
      * Creates new form updateAppointmentPage
      */
-    public UpdateAppointmentPage() {
+    public UpdateAppointmentPage(Integer id) {
         initComponents();
         this.sec = new Secretary();
+        this.id = id;
     }
 
     /**
@@ -164,24 +164,24 @@ public class UpdateAppointmentPage extends javax.swing.JInternalFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // saveButton
+  
         String date = dateInput.getText();
         String hour = hourInput.getText();
         String patientName = patientNameInput.getText();
         String docName = docNameInput.getText();
         String visit = visitSelector.getToolTipText();
         
-        pat = sec.getPatientByName(patientName);
-        doc = sec.getDoctorByName(docName);
-        
-        if(pat != null){
-            this.appt = new Appointment(date, hour, this.doc, this.pat, visit);
-            sec.updateAppointment(appt, date, hour, this.doc, this.pat, visit);
-        
-        JOptionPane.showMessageDialog(rootPane, "Agendamento Atualizado com sucesso\n\n"
-                + date + "\n" + hour  + "\n" + patientName + "\n" + docName);
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Paciente não encontrado");
+        try{
+            Patient pat = sec.getPatientByName(patientName);
+            Doctor doc = sec.getDoctorByName(docName);
+            sec.updateAppointment(this.id, date, hour, doc, pat, visit);
+            JOptionPane.showMessageDialog(rootPane, "Agendamento Atualizado com sucesso\n\n"
+                    + date + "\n" + hour  + "\n" + patientName + "\n" + docName);
+            this.dispose();
+        } catch (Throwable e){
+            JOptionPane.showMessageDialog(rootPane, "Erro na atualização de agendamento. Erro: " + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

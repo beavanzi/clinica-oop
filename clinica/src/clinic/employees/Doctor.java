@@ -5,11 +5,9 @@
  */
 package clinic.employees;
 import clinic.Global;
-import clinic.dao.AttendanceDAO;
 import clinic.dao.MedicalRecordDAO;
 import clinic.dao.PatientDAO;
 import clinic.dao.interfaces.InterfaceMedicalRecordDAO;
-import clinic.dao.interfaces.InterfaceAttendanceDAO;
 import clinic.dao.interfaces.InterfacePatientDAO;
 import clinic.dao.interfaces.InterfaceDoctorDAO;
 import clinic.dao.interfaces.InterfaceAditionalInfoDAO;
@@ -28,11 +26,10 @@ import java.util.ArrayList;
  *
  * @author biaav
  */
-public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO, InterfacePatientDAO, InterfaceDoctorDAO, InterfacePatientRecordDAO, InterfaceAditionalInfoDAO{
+public class Doctor implements InterfaceMedicalRecordDAO, InterfacePatientDAO, InterfaceDoctorDAO, InterfacePatientRecordDAO, InterfaceAditionalInfoDAO{
     private String name;
     private String doctorDoc;
     private String id;
-    private AttendanceDAO daoAtt;
     private MedicalRecordDAO daoMedRec;
     private PatientDAO daoPat;
     private DoctorDAO daoDoc;
@@ -41,11 +38,9 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
 
     public Doctor() {
         this.daoPat = Global.daoPat;
-        this.daoDoc = Global.daoDoc;
-        this.daoAtt = Global.daoAtt;
+        this.daoDoc = Global.daoDoc; 
         this.daoMedRec = Global.daoMedRec;
         this.daoAdInfo = Global.daoAdInfo;
-        this.daoPatRec = Global.daoPatRec;
     }
 
     public Doctor(String name, String doctorDoc, String id) {
@@ -53,11 +48,9 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
         this.doctorDoc = doctorDoc;
         this.id = id;
         this.daoMedRec = Global.daoMedRec;
-        this.daoAtt = Global.daoAtt;
         this.daoPat = Global.daoPat;
         this.daoDoc = Global.daoDoc;
         this.daoAdInfo = Global.daoAdInfo;
-        this.daoPatRec = Global.daoPatRec;
                 
     }
 
@@ -86,15 +79,13 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     }
     
     @Override
-    public AditionalInfo createAditionalInfo(String badHabit, String allergy, String surgery, Patient patient){
-        AditionalInfo adInfo = this.daoAdInfo.createAditionalInfo(badHabit, allergy, surgery, patient);
-        
-        return adInfo;
+    public void createAditionalInfo(String badHabit, String allergy, String surgery, Patient patient){
+        this.daoAdInfo.createAditionalInfo(badHabit, allergy, surgery, patient);  
     }
     
     @Override    
-    public void deletePatient(Patient patient){
-       this.daoPat.deletePatient(patient);
+    public void deletePatient(String searchName){
+       this.daoPat.deletePatient(searchName);
     }
     
     @Override
@@ -103,37 +94,33 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     }
     
     @Override
-    public void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance){
-        this.daoPat.updatePatient(patient, name, docNumber, birthDate, address, phone, email, healthInsurance);
+    public void updatePatient(String searchName, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance){
+        this.daoPat.updatePatient(searchName, name, docNumber, birthDate, address, phone, email, healthInsurance);
     }
-    
-    @Override
-    public ArrayList<Patient> getAllPatients(){
-        return this.daoPat.getAllPatients();
-    }
+   
     @Override
     public ArrayList<Patient> getAllPatientsWithoutComunications(){
         return this.getAllPatientsWithoutComunications();
     }
     
     @Override
-    public void updateAditionalInfo(AditionalInfo adInfo, String badHabit, String allergy, String surgery) {
-        this.daoAdInfo.updateAditionalInfo(adInfo, badHabit, allergy, surgery);
+    public void updateAditionalInfo(Integer patientId, String badHabit, String allergy, String surgery) {
+        this.daoAdInfo.updateAditionalInfo(patientId, badHabit, allergy, surgery);
     }
     
     @Override
-    public void deleteAditionalInfo(AditionalInfo adInfo) {
-       this.daoAdInfo.deleteAditionalInfo(adInfo);
+    public void deleteAditionalInfo(Integer patientId) {
+       this.daoAdInfo.deleteAditionalInfo(patientId);
     }
     
-    @Override
-    public ArrayList<AditionalInfo> getAllAditionalInfo() {
-        return this.daoAdInfo.getAllAditionalInfo();
-    }
+//    @Override
+//    public ArrayList<AditionalInfo> getAllAditionalInfo() {
+//        return this.daoAdInfo.getAllAditionalInfo();
+//    }
 
     @Override
-    public AditionalInfo getAdidionalInfoByPatient(String patientName) {
-      return this.daoAdInfo.getAdidionalInfoByPatient(patientName);
+    public AditionalInfo getAditionalInfoByPatient(Integer patientId) {
+      return this.daoAdInfo.getAditionalInfoByPatient(patientId);
     }
     
     @Override
@@ -146,59 +133,33 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
         return this.daoDoc.getDoctorByName(searchParam);
     }
     
-    @Override
-    public Attendance getAttendanceByDay(String searchParam){
-        return this.daoAtt.getAttendanceByDay(searchParam);
-    }
     
     @Override
-    public Attendance createAttendance(int day, int month, Patient patient, Doctor doctor) {
-       Attendance attendance = this.daoAtt.createAttendance(day, month, patient, doctor);
-       return attendance;
-    }
-
-    @Override
-    public void updateAttendance(Attendance attendance, int day, int month, Patient patient, Doctor doctor) {
-        this.daoAtt.updateAttendance(attendance, day, month, patient, doctor);
-    }
-
-    @Override
-    public void deleteAttendance(Attendance attendance) {
-        this.daoAtt.deleteAttendance(attendance);
+    public void createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient){
+        this.daoMedRec.createMedicalRecord(prescription, attestation, followUp, doctor, patient);
     }
     
-    @Override
-    public ArrayList<Attendance> getAllAttendances() {
-        return this.daoAtt.getAllAttendances();
-    }
-    
-    @Override
-    public MedicalRecord createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient){
-        MedicalRecord medRec = this.daoMedRec.createMedicalRecord(prescription, attestation, followUp, doctor, patient);
-        return medRec;
-    }
-    
-    @Override
-    public String getPrescription(MedicalRecord medRec){
-        String prescription = this.daoMedRec.getPrescription(medRec);
- 
-        return prescription;
-    }
-    
-    @Override
-    public String getAttestation(MedicalRecord medRec){
-        String attestation = this.daoMedRec.getAttestation(medRec);
- 
-        return attestation;
-    }
-    
-    @Override
-    public String getFollowUp(MedicalRecord medRec){
-        String followUp = this.daoMedRec.getFollowUp(medRec);
- 
-        return followUp;
-    }
-    
+//    @Override
+//    public String getPrescription(MedicalRecord medRec){
+//        String prescription = this.daoMedRec.getPrescription(medRec);
+// 
+//        return prescription;
+//    }
+//    
+//    @Override
+//    public String getAttestation(MedicalRecord medRec){
+//        String attestation = this.daoMedRec.getAttestation(medRec);
+// 
+//        return attestation;
+//    }
+//    
+//    @Override
+//    public String getFollowUp(MedicalRecord medRec){
+//        String followUp = this.daoMedRec.getFollowUp(medRec);
+// 
+//        return followUp;
+//    }
+//    
     @Override
     public ArrayList<MedicalRecord> getAllMedicalRecord(){
         return this.daoMedRec.getAllMedicalRecord();
@@ -210,28 +171,18 @@ public class Doctor implements InterfaceMedicalRecordDAO, InterfaceAttendanceDAO
     }
     
     @Override
-    public PatientRecord createPatientRecord(String symptoms, String diagnosis, String treatment, Patient patient){
-        return this.daoPatRec.createPatientRecord(symptoms, diagnosis, treatment, patient);
+    public void createPatientRecord(String symptoms, String diagnosis, String treatment, Patient patient){
+        this.daoPatRec.createPatientRecord(symptoms, diagnosis, treatment, patient);
     }
     
     @Override
-    public void updatePatientRecord(PatientRecord patRec, String symptoms, String diagnosis, String treatment){
-        this.daoPatRec.updatePatientRecord(patRec, symptoms, diagnosis, treatment);
+    public void updatePatientRecord(String symptoms, String diagnosis, String treatment, Integer patientId){
+        this.daoPatRec.updatePatientRecord(symptoms, diagnosis, treatment, patientId);
     }
     
     @Override
-    public void deletePatientRecord(PatientRecord patRec){
-        this.daoPatRec.deletePatientRecord(patRec);
-    }
-    
-    @Override
-    public ArrayList<PatientRecord> getAllPatientRecord(){
-       return this.daoPatRec.getAllPatientRecord();
-    }
-    
-    @Override
-    public PatientRecord getPatientRecord(String patientName){
-        return this.daoPatRec.getPatientRecord(patientName);
+    public void deletePatientRecord(Integer patientId){
+        this.daoPatRec.deletePatientRecord(patientId);
     }
     
     @Override

@@ -5,17 +5,32 @@
  */
 package clinic.external;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author biaav
  */
+
+@Entity
 public class Patient {
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
+    @Column (name="name", length=100, nullable=false, unique=true)
     private String name;
+    @Column (name="docnumber", length=17, nullable=false, unique=true)
     private String docNumber;
+    @Column (name="birthdate", length=11, nullable=false, unique=false)
     private String birthDate;
+    @Column (name="address", length=100, nullable=false, unique=false)
     private String address;
     private String phone;
     private String email;
+    @Column (name="healthinsurance", length=100, nullable=false, unique=false)
     private String healthInsurance;
     
     
@@ -30,6 +45,10 @@ public class Patient {
         this.phone = phone;
         this.email = email;
         this.healthInsurance = healthInsurance;
+    }
+    
+    public Integer getId(){
+        return id;
     }
 
     public String getName() {

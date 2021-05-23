@@ -14,9 +14,8 @@ import java.util.ArrayList;
  */
 public interface InterfacePatientDAO {
     void createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
-    void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
-    void deletePatient(Patient patient);
-    ArrayList<Patient> getAllPatients();
-    Patient getPatientByName(String searchParam);
+    void updatePatient(String searchName, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance);
+    void deletePatient(String name);
+    Patient getPatientByName(String searchName);
     ArrayList<Patient> getAllPatientsWithoutComunications();
 }

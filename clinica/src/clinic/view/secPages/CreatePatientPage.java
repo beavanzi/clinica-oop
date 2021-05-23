@@ -229,10 +229,16 @@ public class CreatePatientPage extends javax.swing.JInternalFrame{
         String name = nameInput.getText();
         String phone = phoneInput.getText();
         String docNumber = docNumInput.getText();
-        sec.createPatient(name, docNumber, birthDate, address, phone, email, healthInsurance);
-        JOptionPane.showMessageDialog(rootPane, "Paciente Criado com sucesso\n\n"
+        
+        try {
+            sec.createPatient(name, docNumber, birthDate, address, phone, email, healthInsurance);
+            JOptionPane.showMessageDialog(rootPane, "Paciente Criado com sucesso\n\n"
                 + name + "\n" + email  + "\n" + birthDate + "\n" + healthInsurance + "\n" + address + "\n" + phone + "\n" + docNumber);
-   
+            this.dispose();
+        } catch (Throwable e){
+             JOptionPane.showMessageDialog(rootPane, "Erro ao criar paciente. Erro: " + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

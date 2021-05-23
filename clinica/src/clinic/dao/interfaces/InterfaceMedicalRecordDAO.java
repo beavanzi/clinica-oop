@@ -13,10 +13,7 @@ import java.util.ArrayList;
  * @author sarahanduca
  */
 public interface InterfaceMedicalRecordDAO {
-    MedicalRecord createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient);
-    String getPrescription(MedicalRecord medRec);
-    String getAttestation(MedicalRecord medRec);
-    String getFollowUp(MedicalRecord medRec);
-    public ArrayList<MedicalRecord> getAllMedicalRecord();
-    public MedicalRecord getMedicalRecord(String patientName);
+    void createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient);
+    ArrayList<MedicalRecord> getAllMedicalRecord();
+    MedicalRecord getMedicalRecord(String patientName);
 }

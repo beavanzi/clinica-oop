@@ -139,6 +139,7 @@ public class CreateAditionalPatientDataPage extends javax.swing.JInternalFrame {
         
         JOptionPane.showMessageDialog(rootPane, "Informações Adicionais criadas com sucesso\n\n"
                 + allergy + "\n" + badHabit  + "\n" + cirurgy);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

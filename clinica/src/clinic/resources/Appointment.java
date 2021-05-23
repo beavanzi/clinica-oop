@@ -7,15 +7,27 @@ package clinic.resources;
 
 import clinic.employees.Doctor;
 import clinic.external.Patient;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
  * @author biaav
  */
+@Entity
 public class Appointment {
-    private String day;
-    private String hour;
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id;
+    private String dateDay;
+    private String dateHour;
+    @Transient
     private Doctor doctor;
+    @OneToOne
     private Patient patient;
     private String visit;
 
@@ -23,27 +35,27 @@ public class Appointment {
     }
 
     public Appointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
-        this.day = day;
-        this.hour = hour;
+        this.dateDay = day;
+        this.dateHour = hour;
         this.doctor = doctor;
         this.patient = patient;
         this.visit = visit;
     }
     
     public String getDay() {
-        return day;
+        return dateDay;
     }
 
     public void setDay(String day) {
-        this.day = day;
+        this.dateDay = day;
     }
 
     public String getHour() {
-        return hour;
+        return dateHour;
     }
 
     public void setHour(String hour) {
-        this.hour = hour;
+        this.dateHour = hour;
     }
 
     public Doctor getDoctor() {

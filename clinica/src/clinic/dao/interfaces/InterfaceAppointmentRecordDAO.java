@@ -7,6 +7,7 @@ package clinic.dao.interfaces;
 
 import clinic.resources.Appointment;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,5 +15,5 @@ import java.util.ArrayList;
  * @author biaav
  */
 public interface InterfaceAppointmentRecordDAO {
-    ArrayList<Appointment> getNextDayAppointments(ArrayList<Appointment> appts);
+    List<Appointment> getNextDayAppointments(List<Appointment> appts);
 }

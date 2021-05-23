@@ -16,6 +16,7 @@ import clinic.dao.interfaces.InterfacePatientDAO;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -37,7 +38,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
         this.daoPat = Global.daoPat;
         this.daoAppt = Global.daoAppt;
         this.daoDoc = Global.daoDoc;
-        this.daoApptRec = new AppointmentRecordDAO();
+        this.daoApptRec = Global.daoApptRec;
     }
     
     public Secretary(String secName, String secId) {
@@ -46,7 +47,7 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
         this.daoPat = Global.daoPat;
         this.daoAppt = Global.daoAppt;
         this.daoDoc = Global.daoDoc;
-        this.daoApptRec = new AppointmentRecordDAO();
+        this.daoApptRec = Global.daoApptRec;
     }
 
     public String getSecName() {
@@ -71,18 +72,13 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     }
 
     @Override
-    public void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
-        this.daoPat.updatePatient(patient, name, docNumber, birthDate, address, phone, email, healthInsurance);
+    public void updatePatient(String searchName, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
+        this.daoPat.updatePatient(searchName, name, docNumber, birthDate, address, phone, email, healthInsurance);
     }
 
     @Override
-    public void deletePatient(Patient patient) {
-        this.daoPat.deletePatient(patient);
-    }
-    
-    @Override
-    public ArrayList<Patient> getAllPatients() {
-        return this.daoPat.getAllPatients();
+    public void deletePatient(String name) {
+        this.daoPat.deletePatient(name);
     }
     
     @Override
@@ -91,25 +87,52 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     }
 
     @Override
-    public Appointment createAppointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
-        Appointment appt = this.daoAppt.createAppointment(day, hour, doctor, patient, visit);
-        return appt;
+    public void createAppointment(String day, String hour, Doctor doctor, Patient patient, String visit) {
+        this.daoAppt.createAppointment(day, hour, doctor, patient, visit);
     }
 
     @Override
-    public void updateAppointment(Appointment appt, String day, String hour, Doctor doctor, Patient patient, String visit) {
-        this.daoAppt.updateAppointment(appt, day, hour, doctor, patient, visit);
+    public void updateAppointment(Integer id, String day, String hour, Doctor doctor, Patient patient, String visit) {
+        this.daoAppt.updateAppointment(id, day, hour, doctor, patient, visit);
     }
 
     @Override
-    public void deleteAppointment(Appointment appt) {
-        this.daoAppt.deleteAppointment(appt);
+    public void deleteAppointment(Integer id) {
+        this.daoAppt.deleteAppointment(id);
+    }
+    
+    @Override
+    public Appointment getAppointmentByPatientName(String searchParam) {
+        return this.daoAppt.getAppointmentByPatientName(searchParam);
     }
 
-    @Override
-    public ArrayList<Appointment> getAllAppointments() {
-        return this.daoAppt.getAllAppointments();
+//    @Override
+//    public ArrayList<Appointment> getAllAppointments() {
+//        return this.daoAppt.getAllAppointments();
+//
+//    }
+//
+//    @Override
+//    public Appointment getAppointmentByDay(String searchParam) {
+//        return this.daoAppt.getAppointmentByDay(searchParam);
+//    }
 
+    @Override
+    public ArrayList<Patient> getAllPatientsWithoutComunications() {
+        return this.daoPat.getAllPatientsWithoutComunications();
+    }
+    
+    @Override
+    public List<Appointment> getAppointmentsByPatients(List<Patient> patients) {
+        return this.daoAppt.getAppointmentsByPatients(patients);
+    }
+
+    public ArrayList<Appointment> getNextDayAppointments() {
+        List<Patient> pats = this.getAllPatientsWithoutComunications();
+        List<Appointment> apps = this.getAppointmentsByPatients(pats);
+        ArrayList<Appointment> apptsNextDay = new ArrayList(this.daoApptRec.getNextDayAppointments(apps));
+        
+        return apptsNextDay;
     }
     
     public Doctor getDoctorByName(String searchParam){
@@ -119,30 +142,6 @@ public class Secretary implements InterfacePatientDAO, InterfaceAppointmentDAO {
     public ArrayList<Doctor> getAllDoctors(){
         return this.daoDoc.getAllDoctors();
     }
-
-    @Override
-    public Appointment getAppointmentByDay(String searchParam) {
-        return this.daoAppt.getAppointmentByDay(searchParam);
-    }
-
-    @Override
-    public ArrayList<Patient> getAllPatientsWithoutComunications() {
-        return this.daoPat.getAllPatientsWithoutComunications();
-    }
-    
-    @Override
-    public ArrayList<Appointment> getAppointmentsByPatients(ArrayList<Patient> patients) {
-        return this.daoAppt.getAppointmentsByPatients(patients);
-    }
-
-    public ArrayList<Appointment> getNextDayAppointments() {
-        ArrayList<Patient> pats = this.getAllPatientsWithoutComunications();
-        ArrayList<Appointment> apps = this.getAppointmentsByPatients(pats);
-        ArrayList<Appointment> apptsNextDay = this.daoApptRec.getNextDayAppointments(apps);   
-        return apptsNextDay;
-    }
-    
-    
     
     
 }

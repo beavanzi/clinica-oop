@@ -6,38 +6,50 @@
 package clinic.resources;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
  * @author sarahanduca
  */
+@Entity
 public class Attendance {
-    private int day;
-    private int month;
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id;
+    private int dateDay;
+    private int dateMonth;
+    @OneToOne
     private Patient patient;
+    @Transient
     private Doctor doctor;
 
     public Attendance(int day, int month, Patient patient, Doctor doctor) {
-        this.day = day;
-        this.month = month;
+        this.dateDay = day;
+        this.dateMonth = month;
         this.patient = patient;
         this.doctor = doctor;
     }
 
     public int getDay() {
-        return day;
+        return dateDay;
     }
 
     public int getMonth() {
-        return month;
+        return dateMonth;
     }
 
     public void setDay(int day) {
-        this.day = day;
+        this.dateDay = day;
     }
 
     public void setMonth(int month) {
-        this.month = month;
+        this.dateMonth = month;
     }
 
     public void setPatient(Patient patient) {

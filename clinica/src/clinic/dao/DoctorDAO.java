@@ -30,12 +30,13 @@ public class DoctorDAO implements InterfaceDoctorDAO{
     public Doctor getDoctorByName(String searchParam) {
        for (int i = 0; i < doctors.size(); i++) {
         Doctor doc = doctors.get(i);
-        
-        if (searchParam.equals(doc.getName())) 
-            return doc;
-       }
-      
-      return null;
+
+            if (searchParam.equals(doc.getName())) {
+                return doc;
+            }
+        }
+       
+       throw new NullPointerException("Médico não encontrado.");
     }
     
     public ArrayList<Doctor> getAllDoctors() {

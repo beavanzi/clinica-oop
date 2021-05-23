@@ -12,6 +12,7 @@ import clinic.dao.PatientDAO;
 import clinic.external.Patient;
 import clinic.resources.Appointment;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,8 +30,8 @@ public class Messenger {
     }
     
     public void sendMessage() {
-        ArrayList<Patient> patients = this.daoPat.getAllPatientsWithComunications();
-        ArrayList<Appointment> appts = this.daoAppt.getAppointmentsByPatients(patients);
+        List<Patient> patients = this.daoPat.getAllPatientsWithComunications();
+        List<Appointment> appts = this.daoAppt.getAppointmentsByPatients(patients);
         this.daoMes.sendMessage(appts); 
     }
     

@@ -14,10 +14,10 @@ import java.util.ArrayList;
  * @author sarahanduca
  */
 public interface InterfaceAditionalInfoDAO {
-    AditionalInfo createAditionalInfo(String badHabit, String allergy, String surgery, Patient patient);
-    void updateAditionalInfo(AditionalInfo adInfo, String badHabit, String allergy, String surgery);
-    void deleteAditionalInfo(AditionalInfo adInfo);
-    ArrayList<AditionalInfo> getAllAditionalInfo();
-    AditionalInfo getAdidionalInfoByPatient(String patientName);
+    void createAditionalInfo(String badHabit, String allergy, String surgery, Patient patient);
+    void updateAditionalInfo(Integer patientId, String badHabit, String allergy, String surgery);
+    void deleteAditionalInfo(Integer patientId);
+   // ArrayList<AditionalInfo> getAllAditionalInfo();
+    AditionalInfo getAditionalInfoByPatient(Integer patientId);
     
 }

@@ -6,17 +6,28 @@
 package clinic.resources;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
  * @author sarahanduca
  */
+@Entity
 public class MedicalRecord {
-    
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
     private String prescription;
     private String attestation;
     private String followUp;
+    @Transient
     private Doctor doctor;
+    @OneToOne
     private Patient patient;
 
     

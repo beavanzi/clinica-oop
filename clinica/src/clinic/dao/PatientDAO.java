@@ -8,105 +8,134 @@ package clinic.dao;
 import clinic.dao.interfaces.InterfacePatientDAO;
 import clinic.external.Patient;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
  * @author biaav
  */
+
 public class PatientDAO implements InterfacePatientDAO{
-    private static ArrayList<Patient> patients;
+    private EntityManager em;
 
-    public PatientDAO() {
-        this.patients = new ArrayList();
+    public PatientDAO(EntityManager em) {
+        this.em = em;
     }
-
+    
     @Override
     public void createPatient(String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
         Patient patient = new Patient(name, docNumber, birthDate, address, phone, email, healthInsurance);
-        patients.add(patient);
+        
+        em.getTransaction().begin();
+        em.persist(patient);
+        em.getTransaction().commit(); 
+     
     }
 
     @Override
-    public void updatePatient(Patient patient, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) {
-        if (patients.contains(patient)) {
-            patient.setAddress(address);
-            patient.setBirthDate(birthDate);
-            patient.setDocNumber(docNumber);
-            patient.setEmail(email);
-            patient.setHealthInsurance(healthInsurance);
-            patient.setName(name);
-            patient.setPhone(phone);   
-        }
+    public void updatePatient(String searchName, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) { 
+       em.getTransaction().begin();
+       
+      try {
+        Query query = em.createQuery("SELECT pat FROM Patient pat WHERE pat.name = :searchName", Patient.class);
+        query.setParameter("searchName", searchName);
+        List<Patient> patients = query.getResultList();
+        Patient pat = patients.get(0);
+        
+        pat.setAddress(address);
+        pat.setBirthDate(birthDate);
+        pat.setDocNumber(docNumber);
+        pat.setEmail(email);
+        pat.setHealthInsurance(healthInsurance);
+        pat.setName(name);
+        pat.setPhone(phone); 
+      } catch (IndexOutOfBoundsException e) {
+           throw new IndexOutOfBoundsException("Paciente não encontrado.");           
+      } catch (Throwable e){
+           throw e;
+      } finally {
+         em.getTransaction().commit(); 
+      }
+
+    }
+    
+    //nao usar ainda
+    public void updatePatient(Patient pat, String name, String docNumber, String birthDate, String address, String phone, String email, String healthInsurance) { 
+       em.getTransaction().begin();
+      
+        pat.setAddress(address);
+        pat.setBirthDate(birthDate);
+        pat.setDocNumber(docNumber);
+        pat.setEmail(email);
+        pat.setHealthInsurance(healthInsurance);
+        pat.setName(name);
+        pat.setPhone(phone); 
+     
+       
+       em.getTransaction().commit();
+    
     }
     
     @Override    
-    public void deletePatient(Patient patient){
-        if (patients.contains(patient)){
-            patients.remove(patient);  
-        }
-    }
-
-    @Override
-    public ArrayList<Patient> getAllPatients() {
-        if (patients.size() > 0){
-            return this.patients;
-        }
-        
-        return null;
-    }
-    
-    
-    @Override
-   public Patient getPatientByName(String searchParam){
-      if (patients.size() > 0){
-        for (int i = 0; i < patients.size(); i++) {
-          Patient pat = patients.get(i);
-
-          if (searchParam.equals(pat.getName())) 
-              return pat;
-         }
-      }
-      
-      return null;
-    }
-   
-    public ArrayList<Patient> getAllPatientsWithComunications() {
-       ArrayList<Patient> pats = new ArrayList();
-       
-       if (patients.size() > 0){
-           for (int i = 0; i < patients.size(); i++){
-               Patient pat = patients.get(i);
-               
-               if (!pat.getEmail().isEmpty() || !pat.getPhone().isEmpty()){
-                  pats.add(pat);
-               }
-           }
+    public void deletePatient(String name){
+       em.getTransaction().begin();
+           
+       try {
+        Query query = em.createQuery("SELECT pat FROM Patient pat WHERE pat.name = :name", Patient.class);
+        query.setParameter("name", name);
+        List<Patient> patients = query.getResultList();
+        Patient pat = patients.get(0);
+        em.remove(pat);
+       } catch (IndexOutOfBoundsException e) {
+           throw new IndexOutOfBoundsException("Paciente não encontrado.");           
+       } catch (Throwable e){
+           throw e;
+       } finally {
+        em.getTransaction().commit();
        }
        
-        return pats;
+    }
+    
+    @Override
+    public Patient getPatientByName(String name){
+       
+       try {
+            Query query = em.createQuery("SELECT pat FROM Patient pat WHERE pat.name = :name", Patient.class);
+            query.setParameter("name", name);
+            List<Patient> patients = query.getResultList();
+            Patient pat = patients.get(0);
+            return pat;
+       } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("Paciente não encontrado.");           
+       }
+   
+    }
+
+   
+    public ArrayList<Patient> getAllPatientsWithComunications() {
+
+        List<Patient> patients = em.createQuery("SELECT pat FROM Patient pat WHERE pat.email <> '' OR pat.phone <> ''", Patient.class).getResultList();
+
+        if (patients.isEmpty()){
+            return new ArrayList();
+        }
+
+        return new ArrayList(patients);
+        
     }
 
     @Override
     public ArrayList<Patient> getAllPatientsWithoutComunications() {
-       ArrayList<Patient> pats = patients;
        
-       if (patients.size() > 0){
-           for (int i = 0; i < patients.size(); i++){
-               Patient pat = patients.get(i);
-               
-               if (!pat.getEmail().isEmpty()){
-                  pats.remove(pat);
-               }
-               
-                if (!pat.getPhone().isEmpty()){
-                  pats.remove(pat);
-               }
-           }
-       }
- 
-        return pats;
+        List<Patient> patients = em.createQuery("SELECT pat FROM Patient pat WHERE pat.email = '' AND pat.phone = ''", Patient.class).getResultList();
+        
+        if (patients.isEmpty()){
+            return new ArrayList();
+        }
+
+        return new ArrayList(patients);
     }
-   
-   
     
 }

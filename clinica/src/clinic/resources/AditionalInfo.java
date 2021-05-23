@@ -5,15 +5,26 @@
  */
 package clinic.resources;
 import clinic.external.Patient;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sarahanduca
  */
+
+@Entity
 public class AditionalInfo {
+    @Id @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Integer id; 
     private String badHabit;
     private String allergy;
     private String surgery;
+    @OneToOne
     private Patient patient;
 
     public AditionalInfo(String badHabit, String allergy, String surgery, Patient patient) {

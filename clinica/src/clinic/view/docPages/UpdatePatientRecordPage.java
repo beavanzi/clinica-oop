@@ -15,15 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
     private Doctor doc;
-    private Patient pat;
-    private PatientRecord patRec;
+    private Integer id;
     /**
      * Creates new form UpdatePatientRecordPage
      */
-    public UpdatePatientRecordPage(Patient patient) {
+    public UpdatePatientRecordPage(Integer id) {
         initComponents();
         this.doc = new Doctor();
-        this.pat = patient;
+        this.id = id;
     }
 
     /**
@@ -127,10 +126,8 @@ public class UpdatePatientRecordPage extends javax.swing.JInternalFrame {
         String treatment = treatmentInput.getText();
         String symptoms = symptomsInput.getText();
         String diagnosis = diagnosisInput.getText();
-        this.patRec = new PatientRecord(symptoms, diagnosis, treatment, this.pat);
         
-        doc.updatePatientRecord(this.patRec, symptoms, diagnosis, treatment);
-        
+        doc.updatePatientRecord(symptoms, diagnosis, treatment, this.id);
         JOptionPane.showMessageDialog(rootPane, "Prontuário Atualizado com Sucesso\n\n"
                 + treatment + "\n" + symptoms + "\n" + diagnosis);
         

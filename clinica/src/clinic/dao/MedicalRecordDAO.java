@@ -9,6 +9,9 @@ import clinic.dao.interfaces.InterfaceMedicalRecordDAO;
 import clinic.employees.Doctor;
 import clinic.external.Patient;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,61 +19,19 @@ import java.util.ArrayList;
  */
 public class MedicalRecordDAO implements InterfaceMedicalRecordDAO {
      private static ArrayList<MedicalRecord> medicalRecord;
+     private EntityManager em;
 
-    public MedicalRecordDAO() {
-        this.medicalRecord = new ArrayList();
+    public MedicalRecordDAO(EntityManager em) {
+        this.em = em;
     } 
-    @Override
-    public MedicalRecord createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient){
-        MedicalRecord medRec = new MedicalRecord(prescription, attestation, followUp, doctor, patient);
-        medicalRecord.add(medRec);
-        return medRec;
-    }
- 
-
-    @Override
-    public String getPrescription(MedicalRecord medRec){
-           if (medicalRecord.contains(medRec)){
-              String pat =  medRec.getPatient().getName();
-              String doc =  medRec.getDoctor().getName();
-              String pres = medRec.getPrescription();
-              String prescription = "Paciente: " + pat + ", " +" Doutor: " + doc + ", Prescrição: " + pres;
-              return prescription;
-        }
-       
-        
-        return null;
-    }
-    @Override
-    public String getAttestation(MedicalRecord medRec){
-        if (medicalRecord.contains(medRec)){
-              String pat =  medRec.getPatient().getName();
-              String doc =  medRec.getDoctor().getName();
-              String att = medRec.getAttestation();
-              String attestation = "Paciente: " + pat + ", " +" Doutor: " + doc + ", Atestado: " + att;
-              return attestation;
-        }
-       
-        
-        return null;
-    }
-    @Override
-    public String getFollowUp(MedicalRecord medRec){
-         if (medicalRecord.contains(medRec)){
-              String pat =  medRec.getPatient().getName();
-              String doc =  medRec.getDoctor().getName();
-              String fUp = medRec.getAttestation();
-              String followUp = "Paciente: " + pat + ", " +" Doutor: " + doc + ", Atestado: " + fUp;
-              return followUp;
-        }
-       
-        
-        return null;
-    }
     
     @Override
-    public ArrayList<MedicalRecord> getAllMedicalRecord() {
-        return this.medicalRecord;
+    public void createMedicalRecord(String prescription, String attestation, String followUp, Doctor doctor, Patient patient){
+        MedicalRecord medRec = new MedicalRecord(prescription, attestation, followUp, doctor, patient);
+       
+        em.getTransaction().begin();
+        em.persist(medRec);
+        em.getTransaction().commit(); 
     }
 
     @Override
@@ -81,12 +42,19 @@ public class MedicalRecordDAO implements InterfaceMedicalRecordDAO {
         if (patientName.equals(medRec.getPatient())){
             return medRec;
         }
-      
-      
       }
        
       return null;
     
+    }
+
+    @Override
+    public ArrayList<MedicalRecord> getAllMedicalRecord() {
+          Query query = em.createQuery("SELECT medRec FROM MedicalRecord medRec", MedicalRecord.class);
+          List<MedicalRecord> medRecs = query.getResultList();
+      
+          return new ArrayList<MedicalRecord>(medRecs);    
+        
     }
             
 }
